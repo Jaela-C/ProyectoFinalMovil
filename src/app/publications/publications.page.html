@@ -1,9 +1,28 @@
 <ion-header>
   <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="presentActionSheet()">
+      <ion-icon name="menu"></ion-icon>
+    </ion-button>
     <ion-title>publications</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-text class="text">
+    <h1>Publicaciones</h1>
+  </ion-text>
+  <ion-list *ngFor = "let publication of publicationsList" (click)="openPublication(publication)">
+    <ion-card class="container">
+      <img class="image" src="https://picsum.photos/100" />
+      <ion-card-content>
+        <ion-card-title><b>{{publication.title}}</b></ion-card-title> <br/>
+        <ion-icon name="person" slot="start"></ion-icon>
+        <ion-label> {{publication.name }} {{publication.last_name}}</ion-label> <br/>
+        <ion-icon name="call" slot="start"></ion-icon> 
+        <ion-label>  {{publication.phone }} </ion-label> <br/>
+        <ion-icon name="calendar" slot="start"></ion-icon> 
+        <ion-label>  {{publication.date_ex }} </ion-label>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>  
 </ion-content>

@@ -1,0 +1,15 @@
+.text{
+    text-align: center;
+}
+.container{
+    display: flex;
+}
+.image{
+    width: 50%;
+    height: 30%;
+}
+.card{
+    height: 200px;
+    width: 50%;
+    overflow: scroll;
+}

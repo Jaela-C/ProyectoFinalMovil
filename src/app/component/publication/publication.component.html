@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>publications</ion-title>
+    <ion-button slot="end" fill="clear" (click)="closePublication()">
+      <ion-icon name="close"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-text class="text">
+    <h1>{{publication.title}}</h1>
+  </ion-text>
+  <ion-list>
+    <ion-item>
+      <ion-avatar slot="start">
+        <img src="https://picsum.photos/100">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{publication.name}} {{publication.last_name}}</h3>
+        <p>{{publication.phone}}</p>
+      </ion-label>
+    </ion-item>
+    <ion-card class="container">
+      <img class="image" src="https://picsum.photos/100" />
+      <ion-card-content class="card">
+        {{publication.description}} 
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
+  <ul *ngIf="room">
+    <li *ngFor="let comment of room.comments">{{comment.content}}</li>
+  </ul>  
+</ion-content>
+
+<ion-footer padding>
+  <ion-item>
+    <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    <ion-button (click)="sendComment()">
+      <ion-icon name= "send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>
