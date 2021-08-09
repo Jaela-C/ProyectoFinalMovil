@@ -1,5 +1,8 @@
+import { Route } from '@angular/compiler/src/core';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router'
 
 @Injectable({
   providedIn: 'root'
@@ -7,16 +10,23 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AuthenticateService {
 
   constructor(
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private db: AngularFirestore,
+    private router: Router
   ) { }
 
   registerUser(value) {
     return new Promise<any>((resolve, reject) => {
-
       this.afAuth.createUserWithEmailAndPassword(value.email, value.password)
-        .then(
-          res => resolve(res),
-          err => reject(err));
+      .then( res => {
+        this.db.collection('users').doc(res.user.uid).set({
+          name: value.name,
+          last_name: value.last_name,
+          email: value.email,
+          rol: {admin: false}
+        })
+        resolve(res)
+      }).catch(err => reject(err));
     });
 
   }
@@ -37,6 +47,7 @@ export class AuthenticateService {
           .then(() => {
             console.log('Log Out');
             resolve();
+            this.router.navigate(['/login'])
           }).catch((error) => {
             reject();
           });
