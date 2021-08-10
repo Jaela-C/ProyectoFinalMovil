@@ -46,22 +46,25 @@ export class PublicationComponent implements OnInit {
 
   sendComment(){
     this.authService.userDetails().subscribe(user => {
-      console.log('entra')
+      console.log('user', user.uid)
+      if(user.uid != null){
       this.id_user = user.uid
       this.db.collection('users').doc(user.uid).valueChanges().subscribe(data => {
         this.dataUser = data
-        console.log(this.dataUser.name)
+        const comentario : comments = {
+          content : this.msg,
+          date: new Date(),
+          id_user: this.id_user,
+          name_user: this.dataUser.name,
+          last_name_user: this.dataUser.last_name
+        }
+        this.commentsList.push(this.comments);
+        this.PublicationsService.sendComment(comentario, this.publication.id)
       })
-    })
-    const comentario : comments = {
-      content : this.msg,
-      date: new Date(),
-      id_user: this.id_user,
-      name_user: this.dataUser.name,
-      last_name_user: this.dataUser.last_name
     }
-
-    this.commentsList.push(this.comments);
-    this.PublicationsService.sendComment(comentario, this.publication.id)
+    else {
+      console.log("sin sesión")
+    }
+    })
   }
 }

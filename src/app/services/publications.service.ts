@@ -22,10 +22,22 @@ export interface publicationData {
 export class PublicationsService {
 
   constructor(
-    private db: AngularFirestore
+    private db: AngularFirestore,
   ) { }
 
-  getPublications(){
+  getPublicationsFoundation(id){
+    console.log(id)
+    return this.db.collection('publications', ref => ref.where('id_user', "==", id)).snapshotChanges().pipe(map( publications => {
+      return publications.map( doc => {
+        const data = doc.payload.doc.data() as publicationData;
+        data.id = doc.payload.doc.id;
+        return data;
+      })
+    }))
+  }
+
+  getPublicationsUser(id){
+    console.log(id)
     return this.db.collection('publications').snapshotChanges().pipe(map( publications => {
       return publications.map( doc => {
         const data = doc.payload.doc.data() as publicationData;
