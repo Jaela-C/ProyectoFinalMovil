@@ -31,6 +31,23 @@ export class AuthenticateService {
 
   }
 
+  registerFoundation(value) {
+    return new Promise<any>((resolve, reject) => {
+      this.afAuth.createUserWithEmailAndPassword(value.email, value.password)
+      .then( res => {
+        this.db.collection('foundations').doc(res.user.uid).set({
+          name: value.name,
+          last_name: value.last_name,
+          email: value.email,
+          rol: {admin: false},
+          name_foundation: value.name_foundation
+        })
+        resolve(res)
+      }).catch(err => reject(err));
+    });
+
+  }
+
   loginUser(value) {
     return new Promise<any>((resolve, reject) => {
       this.afAuth.signInWithEmailAndPassword(value.email, value.password)

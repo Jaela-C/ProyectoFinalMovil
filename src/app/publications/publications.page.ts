@@ -20,8 +20,16 @@ export class PublicationsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.publicationService.getPublications().subscribe( publications => {
-      this.publicationsList = publications
+    console.log('entra')
+    this.authService.userDetails().subscribe(user => {
+      if(user != null){
+        this.publicationService.getPublicationsFoundation(user.uid).subscribe( publications => {
+          this.publicationsList = publications
+        })
+      }
+      else {
+        console.log("sin sesión")
+      }
     })
   }
   openPublication(publication){

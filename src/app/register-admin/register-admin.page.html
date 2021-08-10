@@ -4,7 +4,7 @@
 </ion-header>
 
 <ion-content class="ion-padding" color="aliceblue">
-  <form class="form" [formGroup]="validations_form" (ngSubmit)="registerUser(validations_form.value)">
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="registerFoundation(validations_form.value)">
     <div class="containerForm">
       <ion-avatar class="image">
         <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
@@ -31,6 +31,19 @@
         <ng-container *ngFor="let validation of validation_messages.last_name">
           <div class="error-message"
             *ngIf="validations_form.get('last_name').hasError(validation.type) && (validations_form.get('last_name').dirty || validations_form.get('last_name').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
+      <ion-item class="login" color="azure">
+        <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="briefcase"></ion-icon>Nombre de la fundación</ion-label>
+        <ion-input type="text" formControlName="name_foundation"></ion-input>
+      </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.name_foundation">
+          <div class="error-message"
+            *ngIf="validations_form.get('name_foundation').hasError(validation.type) && (validations_form.get('name_foundation').dirty || validations_form.get('name_foundation').touched)">
             {{ validation.message }}
           </div>
         </ng-container>

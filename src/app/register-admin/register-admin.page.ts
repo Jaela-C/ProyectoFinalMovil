@@ -5,11 +5,11 @@ import { NavController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register-admin',
+  templateUrl: './register-admin.page.html',
+  styleUrls: ['./register-admin.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class RegisterAdminPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage ='';
@@ -23,6 +23,18 @@ export class LoginPage implements OnInit {
   }
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
+      name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[a-zA-Z]+')
+      ])),
+      last_name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[a-zA-Z]+')
+      ])),
+      name_foundation:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[a-zA-Z]+')
+      ])),
       email:new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
@@ -36,6 +48,21 @@ export class LoginPage implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   validation_messages={
     // eslint-disable-next-line quote-props
+    'name':[
+      {type: 'required', message: 'El nombre es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'last_name':[
+      {type: 'required', message: 'El apellido es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un apellido válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'name_foundation':[
+      {type: 'required', message: 'El nombre de la fundación es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
+    ],
+    // eslint-disable-next-line quote-props
     'email':[
       {type: 'required', message: 'El email es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un correo válido'}
@@ -47,8 +74,8 @@ export class LoginPage implements OnInit {
     ]
   };
 
-  loginUser(value){
-    this.authService.loginUser(value)
+  registerFoundation(value){
+    this.authService.registerFoundation(value)
     .then(res => {
       console.log(res);
       this.errorMessage='';
@@ -59,7 +86,8 @@ export class LoginPage implements OnInit {
     );
   }
 
-  goToTypePage(){
-    this.navCtrl.navigateForward('/type');
+  goToLoginPage(){
+    this.navCtrl.navigateForward('/login');
   }
+
 }

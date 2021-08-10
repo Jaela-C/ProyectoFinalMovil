@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="blueryb">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="aliceblue">
+      <div class="submit-btn">
+        <ion-avatar class="image">
+          <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
+        </ion-avatar>
+        <ion-button color="brinkpink" class="submit-btn1" (click)="goToRegisterFoundationPage()">Administrador</ion-button>
+        <ion-button color="brinkpink" class="submit-btn1" (click)="goToRegisterPage()">Usuario</ion-button>
+      </div>
+  <div class="text">
+    <p class="go-to-register">
+      ¿Ya tienes una cuenta? 
+    </p>
+    <p>
+      <a (click)="goToLoginPage()">Iniciar sesión</a>
+    </p>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="blueryb">
+  </ion-toolbar>
+</ion-footer>

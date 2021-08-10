@@ -27,7 +27,15 @@ const routes: Routes = [
     path: 'publications',
     loadChildren: () => import('./publications/publications.module').then( m => m.PublicationsPageModule),
     canActivate: [AuthGuard]
+  },  {
+    path: 'type',
+    loadChildren: () => import('./type/type.module').then( m => m.TypePageModule)
   },
+  {
+    path: 'register-admin',
+    loadChildren: () => import('./register-admin/register-admin.module').then( m => m.RegisterAdminPageModule)
+  },
+
 ];
 
 @NgModule({
