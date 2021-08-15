@@ -15,8 +15,8 @@ export class PublicationComponent implements OnInit {
   public publication: any;
 
   public commentsList = [];
-  public dataUser: any;
-  public comments: comments;
+  public infoUser: any;
+  public infoFoundation: any;
   public msg: string;
   public name_user: string;
   public id_user: string;
@@ -46,25 +46,39 @@ export class PublicationComponent implements OnInit {
 
   sendComment(){
     this.authService.userDetails().subscribe(user => {
-      console.log('user', user.uid)
-      if(user.uid != null){
-      this.id_user = user.uid
-      this.db.collection('users').doc(user.uid).valueChanges().subscribe(data => {
-        this.dataUser = data
-        const comentario : comments = {
-          content : this.msg,
-          date: new Date(),
-          id_user: this.id_user,
-          name_user: this.dataUser.name,
-          last_name_user: this.dataUser.last_name
+      if(user != null){
+        this.db.collection('users').doc(user.uid).get().subscribe( userInfo => {
+          this.infoUser = userInfo.data()
+          if(this.infoUser != undefined){
+            const comentario : comments = {
+              content : this.msg,
+              date: new Date(),
+              id_user: user.uid,
+              name_user: this.infoUser.name,
+              last_name_user: this.infoUser.last_name,
+            }
+            this.PublicationsService.sendComment(comentario, this.publication.id)
+          }
+          else {
+            this.db.collection('foundations').doc(user.uid).get().subscribe( foundationInfo => {
+              this.infoFoundation = foundationInfo.data()
+              if(this.infoFoundation != undefined){
+                const comentario1 : comments = {
+                  content : this.msg,
+                  date: new Date(),
+                  id_user: user.uid,
+                  name_user: this.infoFoundation.name,
+                  last_name_user: this.infoFoundation.last_name,
+                }
+                this.PublicationsService.sendComment(comentario1, this.publication.id)
+              }
+            }); 
         }
-        this.commentsList.push(this.comments);
-        this.PublicationsService.sendComment(comentario, this.publication.id)
-      })
-    }
-    else {
-      console.log("sin sesión")
-    }
+      });
+      }
+      else {
+        console.log("sin sesión")
+      }
     })
   }
 }

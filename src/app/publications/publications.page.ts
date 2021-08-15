@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticateService } from '../services/authentication.service';
 import { PublicationsService } from '../services/publications.service';
 import { ModalController, ActionSheetController } from '@ionic/angular';
-import { PublicationComponent } from '../component/publication/publication.component'
+import { PublicationComponent } from '../component/publication/publication.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-publications',
@@ -12,20 +13,32 @@ import { PublicationComponent } from '../component/publication/publication.compo
 export class PublicationsPage implements OnInit {
 
   public publicationsList :any = [];
+  public infoUser: any;
+  public infoFoundation: any;
   constructor(
     public authService: AuthenticateService,
     public publicationService: PublicationsService,
     private modal: ModalController,
-    public actionSheetController: ActionSheetController
+    public actionSheetController: ActionSheetController,
+    private db: AngularFirestore,
   ) { }
 
   ngOnInit() {
     console.log('entra')
     this.authService.userDetails().subscribe(user => {
       if(user != null){
-        this.publicationService.getPublicationsFoundation(user.uid).subscribe( publications => {
-          this.publicationsList = publications
-        })
+        this.infoUser = this.db.collection('users').doc(user.uid).get().subscribe( userInfo => {
+          if(userInfo.data() == undefined){
+              this.publicationService.getPublicationsFoundation(user.uid).subscribe( publications => {
+                this.publicationsList = publications
+              })
+          }
+          else{
+            this.publicationService.getPublicationsUser(user.uid).subscribe( publications => {
+              this.publicationsList = publications
+            })
+          }
+        }); 
       }
       else {
         console.log("sin sesión")
