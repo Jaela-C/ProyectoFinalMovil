@@ -5,24 +5,23 @@ import { FormGroup } from '@angular/forms';
 import { ActionSheetController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-// import { FirestoreService } from '../../services/firestore.service';
 
 @Component({
-  selector: 'app-profile-user',
-  templateUrl: './profile-user.page.html',
-  styleUrls: ['./profile-user.page.scss'],
+  selector: 'app-profile-admin',
+  templateUrl: './profile-admin.page.html',
+  styleUrls: ['./profile-admin.page.scss'],
 })
-export class ProfileUserPage implements OnInit {
+export class ProfileAdminPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage ='';
-  infoUser: any;
-  uid: string;
+  infoFoundation: any;
 
-  user: UserInterface = {
+  foundation: FoundationInterface = {
     uid: '',
     name: '',
     last_name: '',
+    name_foundation: '',
     email: '',
     photo: '',
     rol: '',
@@ -37,26 +36,27 @@ export class ProfileUserPage implements OnInit {
 
   }
   ngOnInit() {
-    this.profileUser();
+    this.profileUser()
   }
 
   profileUser(){
     this.authService.userDetails().subscribe(user => {
       if(user != null){
-        this.db.collection('users').doc(user.uid).valueChanges().subscribe( userData => {
-          this.infoUser = userData;
-          if(this.infoUser != undefined){
-            const userinfo : UserInterface = {
+        this.db.collection('foundations').doc(user.uid).valueChanges().subscribe( foundationData => {
+          this.infoFoundation = foundationData;
+          if(this.infoFoundation != undefined){
+            const foundationinfo : FoundationInterface = {
               uid: user.uid,
-              name: this.infoUser.name,
-              last_name: this.infoUser.last_name,
-              email: this.infoUser.email,
+              name: this.infoFoundation.name,
+              last_name: this.infoFoundation.last_name,
+              name_foundation: this.infoFoundation.name_foundation,
+              email: this.infoFoundation.email,
               photo: 'img.png',
-              rol: 'Usuario'
+              rol: 'Administrador'
             }
-            this.user = userinfo;
+            this.foundation = foundationinfo;
           }
-        });
+        })
       }
     });
   }

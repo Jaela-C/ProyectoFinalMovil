@@ -4,7 +4,7 @@ import { PublicationsService } from '../services/publications.service';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { PublicationComponent } from '../component/publication/publication.component';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-publications',
@@ -17,6 +17,8 @@ export class PublicationsPage implements OnInit {
   public infoUser: any;
   public infoFoundation: any;
   private router: Router;
+  public userProfile: boolean;
+
   constructor(
     public authService: AuthenticateService,
     public publicationService: PublicationsService,
@@ -34,11 +36,13 @@ export class PublicationsPage implements OnInit {
               this.publicationService.getPublicationsFoundation(user.uid).subscribe( publications => {
                 this.publicationsList = publications
               })
+              this.userProfile = false;
           }
           else{
             this.publicationService.getPublicationsUser(user.uid).subscribe( publications => {
               this.publicationsList = publications
             })
+            this.userProfile = true;
           }
         }); 
       }
@@ -65,6 +69,10 @@ export class PublicationsPage implements OnInit {
     this.authService.profileUser();
   }
 
+  profileFoundation(){
+    this.authService.profileFoudantion();
+  }
+
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'my-custom-class',
@@ -72,7 +80,13 @@ export class PublicationsPage implements OnInit {
         text: 'Ver perfil',
         icon: 'person',
         handler: () => {
-          this.profileUser()
+          console.log('por', this.userProfile)
+          if(this.userProfile == true){
+            this.profileUser()
+          }
+          if(this.userProfile == false){
+            this.profileFoundation()
+          }
         }
       }, {
         text: 'Agregar publicaciones',

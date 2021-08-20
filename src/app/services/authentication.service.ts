@@ -79,12 +79,7 @@ export class AuthenticateService {
     this.router.navigate(['/profile-user'])
   }
 
-  async getUid(){
-    const uidUser = await this.afAuth.currentUser;
-    if (uidUser === null){
-      return null;
-    }else{
-      return uidUser.uid;
-    }
+  profileFoudantion () {
+    this.router.navigate(['/profile-admin'])
   }
 }
