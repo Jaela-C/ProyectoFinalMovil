@@ -56,4 +56,5 @@ export class PublicationsService {
       comments: firebase.firestore.FieldValue.arrayUnion(comment),
     })
   }
+
 }

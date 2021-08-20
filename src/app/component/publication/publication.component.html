@@ -28,9 +28,17 @@
       </ion-card-content>
     </ion-card>
   </ion-list>
-  <ul *ngIf="room">
-    <li *ngFor="let comment of room.comments">{{comment.content}}</li>
-  </ul>  
+  <ion-list *ngIf="room">
+    <ion-item *ngFor="let comment of room.comments">
+      <ion-avatar slot="start">
+        <img src="https://picsum.photos/100">
+      </ion-avatar>
+      <ion-label>
+        <h3>{{comment.name_user}} {{comment.last_name_user}}</h3>
+        <p>{{comment.content}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>  
 </ion-content>
 
 <ion-footer padding>

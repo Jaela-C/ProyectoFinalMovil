@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" (click)="presentActionSheet()">
+      <ion-icon name="menu"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" color="aliceblue">
+    <div class="containerForm">
+      <ion-avatar class="image">
+        <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
+      </ion-avatar>
+
+      <ion-item class="login" color="azure">
+        <ion-label *ngIf="user.name" class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>{{user.name}}</ion-label>
+        <ion-label *ngIf="foundation.name" class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>{{foundation.name}}</ion-label>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label *ngIf="user.last_name" class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>{{user.last_name}}</ion-label>
+        <ion-label *ngIf="foundation.last_name" class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>{{foundation.last_name}}</ion-label>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label *ngIf="user.email" class="colorText"><ion-icon class="iconP" name="mail"></ion-icon>{{user.email}}</ion-label>
+        <ion-label *ngIf="foundation.email" class="colorText"><ion-icon class="iconP" name="mail"></ion-icon>{{foundation.email}}</ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="foundation.name_foundation" class="login" color="azure">
+        <ion-label class="colorText"><ion-icon class="iconP" name="briefcase"></ion-icon>{{foundation.name_foundation}}</ion-label>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label *ngIf="user.rol" class="colorText"><ion-icon class="iconP" name="lock-closed-outline"></ion-icon>{{user.rol}}</ion-label>
+        <ion-label *ngIf="foundation.rol" class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>{{foundation.rol}}</ion-label>
+      </ion-item>
+
+    </div>
+
+    <div class="submit-btn">
+      <ion-button color="brinkpink" class="submit-btn1">Modificar información</ion-button>
+    </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="blueryb">
+  </ion-toolbar>
+</ion-footer>

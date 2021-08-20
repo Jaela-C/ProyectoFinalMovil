@@ -63,14 +63,14 @@ export class PublicationComponent implements OnInit {
             this.db.collection('foundations').doc(user.uid).get().subscribe( foundationInfo => {
               this.infoFoundation = foundationInfo.data()
               if(this.infoFoundation != undefined){
-                const comentario1 : comments = {
+                const comentario : comments = {
                   content : this.msg,
                   date: new Date(),
                   id_user: user.uid,
                   name_user: this.infoFoundation.name,
                   last_name_user: this.infoFoundation.last_name,
                 }
-                this.PublicationsService.sendComment(comentario1, this.publication.id)
+                this.PublicationsService.sendComment(comentario, this.publication.id)
               }
             }); 
         }

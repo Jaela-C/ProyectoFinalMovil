@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'register-admin',
     loadChildren: () => import('./register-admin/register-admin.module').then( m => m.RegisterAdminPageModule)
   },
+  {
+    path: 'profile-user',
+    loadChildren: () => import('./profile-user/profile-user.module').then( m => m.ProfileUserPageModule)
+  },
 
 ];
 

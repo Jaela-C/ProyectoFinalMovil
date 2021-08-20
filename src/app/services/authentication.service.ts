@@ -1,4 +1,3 @@
-import { Route } from '@angular/compiler/src/core';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -74,5 +73,18 @@ export class AuthenticateService {
 
   userDetails() {
     return this.afAuth.user;
+  }
+
+  profileUser () {
+    this.router.navigate(['/profile-user'])
+  }
+
+  async getUid(){
+    const uidUser = await this.afAuth.currentUser;
+    if (uidUser === null){
+      return null;
+    }else{
+      return uidUser.uid;
+    }
   }
 }

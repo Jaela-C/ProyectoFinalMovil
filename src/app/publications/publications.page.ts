@@ -4,6 +4,7 @@ import { PublicationsService } from '../services/publications.service';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { PublicationComponent } from '../component/publication/publication.component';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-publications',
@@ -15,6 +16,7 @@ export class PublicationsPage implements OnInit {
   public publicationsList :any = [];
   public infoUser: any;
   public infoFoundation: any;
+  private router: Router;
   constructor(
     public authService: AuthenticateService,
     public publicationService: PublicationsService,
@@ -54,8 +56,13 @@ export class PublicationsPage implements OnInit {
     }).then( (modal) => modal.present()
     )
   }
+
   logoutUser(){
     this.authService.logoutUser();
+  }
+
+  profileUser(){
+    this.authService.profileUser();
   }
 
   async presentActionSheet() {
@@ -65,7 +72,7 @@ export class PublicationsPage implements OnInit {
         text: 'Ver perfil',
         icon: 'person',
         handler: () => {
-          console.log('Ver perfil')
+          this.profileUser()
         }
       }, {
         text: 'Agregar publicaciones',
