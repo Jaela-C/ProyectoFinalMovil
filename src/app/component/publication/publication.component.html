@@ -1,51 +1,55 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>publications</ion-title>
+    <ion-title>{{publication.title}}</ion-title>
     <ion-button slot="end" fill="clear" (click)="closePublication()">
       <ion-icon name="close"></ion-icon>
     </ion-button>
   </ion-toolbar>
 </ion-header>
-
-<ion-content>
-  <ion-text class="text">
-    <h1>{{publication.title}}</h1>
-  </ion-text>
-  <ion-list>
-    <ion-item>
-      <ion-avatar slot="start">
-        <img src="https://picsum.photos/100">
-      </ion-avatar>
-      <ion-label>
-        <h3>{{publication.name}} {{publication.last_name}}</h3>
-        <p>{{publication.phone}}</p>
-      </ion-label>
-    </ion-item>
-    <ion-card class="container">
-      <img class="image" src="https://picsum.photos/100" />
-      <ion-card-content class="card">
-        {{publication.description}} 
+<ion-content  class="container">
+    <ion-card class="card">
+      <ion-card-content  class="image">
+        <img src="https://picsum.photos/2560/2048">
+      </ion-card-content>
+      <ion-item>
+        <ion-avatar slot="start">
+          <img src="https://picsum.photos/100">
+        </ion-avatar> 
+        <ion-label>
+          <h3>{{publication.name}} {{publication.last_name}}</h3>
+          <p class="coment">{{publication.phone}}</p>
+        </ion-label>
+      </ion-item>
+      <ion-card-content>
+        {{publication.description}}
+      </ion-card-content>
+      <ion-card-content>
+        <ion-card-subtitle>Comentarios</ion-card-subtitle>
       </ion-card-content>
     </ion-card>
-  </ion-list>
-  <ion-list *ngIf="room">
+  <ion-list *ngIf="room" insert=true>
     <ion-item *ngFor="let comment of room.comments">
-      <ion-avatar slot="start">
-        <img src="https://picsum.photos/100">
-      </ion-avatar>
-      <ion-label>
+      <div class="containeravatar">
+        <ion-avatar slot="start" class="avatar">
+          <img src="https://picsum.photos/100/100">
+        </ion-avatar>
+      </div>
+      <ion-label class="coment">
         <h3>{{comment.name_user}} {{comment.last_name_user}}</h3>
-        <p>{{comment.content}}</p>
+        <p class="coment">{{comment.content}}</p>
       </ion-label>
     </ion-item>
   </ion-list>  
 </ion-content>
-
-<ion-footer padding>
-  <ion-item>
-    <ion-textarea [(ngModel)]="msg"></ion-textarea>
-    <ion-button (click)="sendComment()">
-      <ion-icon name= "send"></ion-icon>
-    </ion-button>
-  </ion-item>
+<ion-footer>
+  <div class="containercomment">
+    <div class="write">
+      <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    </div>
+    <div class="containerbutton">
+      <ion-button (click)="sendComment()" fill=clear class="button">
+        <ion-icon name= "send-outline" class="icon"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
 </ion-footer>
