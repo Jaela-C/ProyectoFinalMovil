@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <div class="containerForm">
+    <ion-avatar class="image">
+      <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
+    </ion-avatar>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Nombre</ion-label>
+        <ion-input formControlName="name" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Apellido</ion-label>
+        <ion-input formControlName="last_name" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Correo electrónico</ion-label>
+        <ion-input formControlName="email" type="text" required></ion-input>
+      </ion-item>
+  </div>
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" color="brinkpink" class="submit-btn" shape="full" expand="block" >Actualizar Perfil</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button [routerLink]="['/profile-user/']" color="brinkpink" class="submit-btn" shape="full" expand="block" >Cancelar</ion-button>
+    </ion-col>
+  </ion-row>
+</form>
+</ion-content>

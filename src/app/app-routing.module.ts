@@ -27,7 +27,8 @@ const routes: Routes = [
     path: 'publications',
     loadChildren: () => import('./publications/publications.module').then( m => m.PublicationsPageModule),
     canActivate: [AuthGuard]
-  },  {
+  },
+  {
     path: 'type',
     loadChildren: () => import('./type/type.module').then( m => m.TypePageModule)
   },
@@ -43,6 +44,15 @@ const routes: Routes = [
     path: 'profile-admin',
     loadChildren: () => import('./profile-admin/profile-admin.module').then( m => m.ProfileAdminPageModule)
   },
+  {
+    path: 'update-user/:id',
+    loadChildren: () => import('./update-user/update-user.module').then( m => m.UpdateUserPageModule)
+  },
+  {
+    path: 'update-foundation/:id',
+    loadChildren: () => import('./update-foundation/update-foundation.module').then( m => m.UpdateFoundationPageModule)
+  },
+
 
 ];
 

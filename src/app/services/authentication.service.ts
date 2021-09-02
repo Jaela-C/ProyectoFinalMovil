@@ -22,7 +22,8 @@ export class AuthenticateService {
           name: value.name,
           last_name: value.last_name,
           email: value.email,
-          rol: {admin: false}
+          image: "",
+          role: "USER"
         })
         resolve(res)
       }).catch(err => reject(err));
@@ -38,8 +39,10 @@ export class AuthenticateService {
           name: value.name,
           last_name: value.last_name,
           email: value.email,
-          rol: {admin: false},
-          name_foundation: value.name_foundation
+          image: "",
+          role: "ADMIN",
+          name_foundation: value.name_foundation,
+          file: ""
         })
         resolve(res)
       }).catch(err => reject(err));

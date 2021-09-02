@@ -3,6 +3,6 @@ export interface UserInterface{
     email: string;
     name: string;
     last_name: string;
-    photo: string;
+    image: string;
     rol: any;
 }

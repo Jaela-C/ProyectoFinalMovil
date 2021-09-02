@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInterface } from 'src/app/models/user';
 import { FoundationInterface } from '../models/foundation';
 import { FormGroup } from '@angular/forms';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, NavController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 
@@ -31,6 +30,7 @@ export class ProfileAdminPage implements OnInit {
     private authService: AuthenticateService,
     private db: AngularFirestore,
     public actionSheetController: ActionSheetController,
+    private navCtrl: NavController,
     // public firestoreService: FirestoreService,
   ) {
 
@@ -91,4 +91,7 @@ export class ProfileAdminPage implements OnInit {
     await actionSheet.present();
   }
 
+  goToUpdateProfile(){
+    this.navCtrl.navigateForward('/update-foundation');
+  }
 }
