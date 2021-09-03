@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <div class="containerForm">
+    <ion-avatar class="image">
+      <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
+    </ion-avatar>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Título</ion-label>
+        <ion-input formControlName="title" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Nombre del responsable</ion-label>
+        <ion-input formControlName="name" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Apellido del responsable</ion-label>
+        <ion-input formControlName="last_name" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Contacto</ion-label>
+        <ion-input formControlName="phone" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Fecha de expiración</ion-label>
+        <ion-input formControlName="date_ex" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item class="login" color="azure">
+        <ion-label class="colorText" position="floating">Descripción</ion-label>
+        <ion-textarea formControlName="description" type="text" required></ion-textarea>
+      </ion-item>
+  </div>
+  <ion-row>
+    <ion-col>
+      <ion-button type="submit" color="brinkpink" class="submit-btn" shape="full" expand="block" >Actualizar Publicación</ion-button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button [routerLink]="['/publications']" color="brinkpink" class="submit-btn" shape="full" expand="block" >Cancelar</ion-button>
+    </ion-col>
+  </ion-row>
+</form>
+</ion-content>

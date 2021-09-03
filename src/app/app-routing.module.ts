@@ -52,6 +52,13 @@ const routes: Routes = [
     path: 'update-foundation/:id',
     loadChildren: () => import('./update-foundation/update-foundation.module').then( m => m.UpdateFoundationPageModule)
   },
+  {
+    path: 'update-publication/:id',
+    loadChildren: () => import('./update-publication/update-publication.module').then( m => m.UpdatePublicationPageModule)
+  },  {
+    path: 'register-publication',
+    loadChildren: () => import('./register-publication/register-publication.module').then( m => m.RegisterPublicationPageModule)
+  },
 
 
 ];

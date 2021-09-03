@@ -64,6 +64,10 @@ export class PublicationsPage implements OnInit {
     this.authService.logoutUser();
   }
 
+  delete(id: string){
+    this.publicationService.delete(id)
+  }
+
   profileUser(){
     this.authService.profileUser();
   }
@@ -71,6 +75,11 @@ export class PublicationsPage implements OnInit {
   profileFoundation(){
     this.authService.profileFoudantion();
   }
+
+  registerPublication(){
+    this.authService.registerPublication();
+  }
+
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
@@ -91,7 +100,7 @@ export class PublicationsPage implements OnInit {
         text: 'Agregar publicaciones',
         icon: 'add-circle',
         handler: () => {
-          console.log('Agregar publicaciones')
+          this.registerPublication()
         }
       }, {
         text: 'Cerrar sesión',
