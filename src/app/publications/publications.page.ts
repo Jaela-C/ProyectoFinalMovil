@@ -28,7 +28,6 @@ export class PublicationsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('entra')
     this.authService.userDetails().subscribe(user => {
       if(user != null){
         this.infoUser = this.db.collection('users').doc(user.uid).get().subscribe( userInfo => {

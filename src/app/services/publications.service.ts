@@ -14,6 +14,7 @@ export interface publicationData {
   name: string
   phone: number
   title: string
+  role_user: string
 }
 
 @Injectable({
@@ -31,6 +32,7 @@ export class PublicationsService {
       return publications.map( doc => {
         const data = doc.payload.doc.data() as publicationData;
         data.id = doc.payload.doc.id;
+        data.role_user;
         return data;
       })
     }))
@@ -42,6 +44,7 @@ export class PublicationsService {
       return publications.map( doc => {
         const data = doc.payload.doc.data() as publicationData;
         data.id = doc.payload.doc.id;
+        data.role_user = "USER";
         return data;
       })
     }))
