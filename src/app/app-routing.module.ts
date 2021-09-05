@@ -4,13 +4,13 @@ import { AuthGuard } from './guards/auth.guard';
 import { NologinGuard } from './guards/nologin.guard';
 
 const routes: Routes = [
-  //{
-  //  path: 'home',
-  //  loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  //},
+  {
+    path: 'home',
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -55,7 +55,8 @@ const routes: Routes = [
   {
     path: 'update-publication/:id',
     loadChildren: () => import('./update-publication/update-publication.module').then( m => m.UpdatePublicationPageModule)
-  },  {
+  },
+  {
     path: 'register-publication',
     loadChildren: () => import('./register-publication/register-publication.module').then( m => m.RegisterPublicationPageModule)
   },
