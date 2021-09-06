@@ -65,6 +65,14 @@ export class ProfileAdminPage implements OnInit {
     this.authService.logoutUser();
   }
 
+  registerPublication(){
+    this.authService.registerPublication();
+  }
+
+  viewPublication(){
+    this.authService.viewPublication();
+  }
+
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
       cssClass: 'my-custom-class',
@@ -75,10 +83,16 @@ export class ProfileAdminPage implements OnInit {
           this.profileUser();
         }
       }, {
-        text: 'Ver publicaciones',
+        text: 'Agregar publicaciones',
         icon: 'add-circle',
         handler: () => {
-          console.log('Agregar publicaciones')
+          this.registerPublication()
+        }
+      }, {
+        text: 'Ver publicaciones',
+        icon: 'eye-outline',
+        handler: () => {
+          this.viewPublication()
         }
       }, {
         text: 'Cerrar sesión',

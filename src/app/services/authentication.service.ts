@@ -86,6 +86,10 @@ export class AuthenticateService {
     this.router.navigate(['/register-publication'])
   }
 
+  viewPublication () {
+    this.router.navigate(['/publications'])
+  }
+
   profileFoudantion () {
     this.router.navigate(['/profile-admin'])
   }

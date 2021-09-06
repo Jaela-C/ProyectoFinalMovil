@@ -80,36 +80,78 @@ export class PublicationsPage implements OnInit {
     this.authService.registerPublication();
   }
 
+  viewPublication(){
+    this.authService.viewPublication();
+  }
 
   async presentActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      cssClass: 'my-custom-class',
-      buttons: [ {
-        text: 'Ver perfil',
-        icon: 'person',
-        handler: () => {
-          console.log('por', this.userProfile)
-          if(this.userProfile == true){
-            this.profileUser()
+    if (this.userProfile == false) {
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [ {
+          text: 'Ver perfil',
+          icon: 'person',
+          handler: () => {
+            console.log('por', this.userProfile)
+            if(this.userProfile == true){
+              this.profileUser()
+            }
+            if(this.userProfile == false){
+              this.profileFoundation()
+            }
           }
-          if(this.userProfile == false){
-            this.profileFoundation()
+        }, {
+          text: 'Agregar publicaciones',
+          icon: 'add-circle',
+          handler: () => {
+            this.registerPublication()
           }
-        }
-      }, {
-        text: 'Agregar publicaciones',
-        icon: 'add-circle',
-        handler: () => {
-          this.registerPublication()
-        }
-      }, {
-        text: 'Cerrar sesión',
-        icon: 'log-out',
-        handler: () => {
-          this.logoutUser()
-        }
-      },]
-    });
-    await actionSheet.present();
+        }, {
+          text: 'Ver publicaciones',
+          icon: 'eye-outline',
+          handler: () => {
+            this.viewPublication()
+          }
+        }, {
+          text: 'Cerrar sesión',
+          icon: 'log-out',
+          handler: () => {
+            this.logoutUser()
+          }
+        },]
+      });
+      await actionSheet.present();
+    }
+    if (this.userProfile == true) {
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [ {
+          text: 'Ver perfil',
+          icon: 'person',
+          handler: () => {
+            console.log('por', this.userProfile)
+            if(this.userProfile == true){
+              this.profileUser()
+            }
+            if(this.userProfile == false){
+              this.profileFoundation()
+            }
+          }
+        }, {
+          text: 'Ver publicaciones',
+          icon: 'eye-outline',
+          handler: () => {
+            this.viewPublication()
+          }
+        }, {
+          text: 'Cerrar sesión',
+          icon: 'log-out',
+          handler: () => {
+            this.logoutUser()
+          }
+        },]
+      });
+      await actionSheet.present();
+    }
   }
 }

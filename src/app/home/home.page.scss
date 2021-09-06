@@ -14,14 +14,38 @@
 }
 
 #container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
+  font-size: 24px
 }
 
 #container a {
   text-decoration: none;
+}
+
+ion-slides {
+  height: 100%;
+  align-items: center !important;
+  justify-content: center !important;
+  background-color: #5081E5;
+}
+
+.ion-img-internal {
+  border-radius: 10%;
+  max-height: 90% !important;
+  max-width: 90% !important;
+  margin: 13px 0 13px;
+  pointer-events: none !important;
+  background-color:#5081E5
+}
+
+ion-card {
+  border-radius: none !important;
+  background-color:#5081E5
+}
+
+ion-content {
+  --ion-background-color: #f0f8ff
+}
+
+h6 {
+  color:white !important
 }
