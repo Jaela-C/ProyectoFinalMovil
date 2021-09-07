@@ -27,7 +27,7 @@ export class PublicationsService {
       this.authService.userDetails().subscribe(user => {
         if(user != null){
           this.infoUser = this.ngFirestore.collection('foundations').doc(user.uid).get().subscribe( userInfo => {
-            if(userInfo.data() !== undefined){
+            //if(userInfo.data() !== undefined){
               this.ngFirestore.collection('publications').doc().set({
                 date_ex: value.date_ex,
                 description: value.description,
@@ -41,8 +41,9 @@ export class PublicationsService {
                 comments: []
               }).then((res) => {
                 resolve(res)
+                //value=[];
               }).catch(err => reject(err));
-            }
+           // }
           })
         }
       })
