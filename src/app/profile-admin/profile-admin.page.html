@@ -6,7 +6,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" color="aliceblue">
+<ion-content class="ion-padding" color="aliceblue" [fullscreen]="true">
     <div class="containerForm">
       <ion-avatar class="image">
         <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
@@ -38,7 +38,4 @@
       <button [routerLink]="['/update-foundation/', foundation.uid]" color="brinkpink" class="submit-btn1">MODIFICAR INFORMACIÓN</button>
     </div>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="blueryb">
-  </ion-toolbar>
-</ion-footer>
+
