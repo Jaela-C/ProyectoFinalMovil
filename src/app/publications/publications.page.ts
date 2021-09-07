@@ -22,7 +22,7 @@ export class PublicationsPage implements OnInit {
 
   constructor(
     public authService: AuthenticateService,
-    public publicationService: PublicationsService,
+    private publicationService: PublicationsService,
     private modal: ModalController,
     public actionSheetController: ActionSheetController,
     private db: AngularFirestore,
