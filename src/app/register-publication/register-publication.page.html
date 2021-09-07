@@ -90,15 +90,13 @@
 
     </div>
       <div class="submit-btn">
-      <ion-button color="brinkpink" class="submit-btn1" type="submit" [disabled]="!validations_form.valid">Registrar Publicación</ion-button>
+      <button class="submit-btn1" type="submit" [disabled]="!validations_form.valid">REGISTRAR PUBLICACIÓN</button>
       </div>
       <label class="error-message">{{errorMessage}}</label>
     </form>
-    <ion-row>
-      <ion-col>
-        <ion-button [routerLink]="['/publications']" color="brinkpink" class="submit-btn" shape="full" expand="block" >Cancelar</ion-button>
-      </ion-col>
-    </ion-row>
+    <div class="submit-btn">
+      <button [routerLink]="['/publications']" class="submit-btn1" shape="full" expand="block" >CANCELAR</button>
+    </div>
 </ion-content>
 <ion-footer>
   <ion-toolbar color="blueryb">
