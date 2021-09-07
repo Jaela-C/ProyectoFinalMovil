@@ -1,0 +1,56 @@
+.text{
+    text-align: center;
+}
+.container{
+    height: 100%;
+}
+.image{
+    text-align: center;
+    margin: 0;
+    padding: 0;
+
+}
+.card{
+    margin: 0;
+    padding: 0;
+}
+.coment{
+    white-space: normal;
+}
+.write{
+    width: 80%;
+}
+.containerbutton{
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.containercomment{
+    display: flex;
+    background-color: #1E1E1E;
+}
+.icon{
+    color: #5081E5;
+}
+.button{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;     
+}
+.avatar{
+    vertical-align: top;
+    width: 80%;
+    height: auto;
+
+
+}
+.containeravatar{
+    height: 100%;
+    display: inline-block;
+    overflow: hidden;
+    width: 16%;
+    padding: 10px 0px 11px;
+}

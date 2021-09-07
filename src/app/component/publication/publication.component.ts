@@ -16,7 +16,6 @@ export class PublicationComponent implements OnInit {
 
   public commentsList = [];
   public infoUser: any;
-  public infoFoundation: any;
   public msg: string;
   public name_user: string;
   public id_user: string;
@@ -59,22 +58,7 @@ export class PublicationComponent implements OnInit {
             }
             this.PublicationsService.sendComment(comentario, this.publication.id)
           }
-          else {
-            this.db.collection('foundations').doc(user.uid).get().subscribe( foundationInfo => {
-              this.infoFoundation = foundationInfo.data()
-              if(this.infoFoundation != undefined){
-                const comentario : comments = {
-                  content : this.msg,
-                  date: new Date(),
-                  id_user: user.uid,
-                  name_user: this.infoFoundation.name,
-                  last_name_user: this.infoFoundation.last_name,
-                }
-                this.PublicationsService.sendComment(comentario, this.publication.id)
-              }
-            }); 
-        }
-      });
+        });
       }
       else {
         console.log("sin sesión")

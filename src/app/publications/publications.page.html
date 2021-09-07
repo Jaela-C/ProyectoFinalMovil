@@ -10,7 +10,7 @@
 <ion-content>
   <ion-card *ngFor = "let publication of publicationsList">
       <ion-grid>
-        <ion-row (click)="openPublication(publication)">
+        <ion-row *ngIf="publication.role_user" (click)="openPublication(publication)">
           <ion-col>
             <img src="https://picsum.photos/2560/2048">
           </ion-col>
@@ -28,16 +28,31 @@
             </ion-card-content>
           </ion-col>
         </ion-row>
-        <ion-row>
-          <ion-col class="left" (click)="openPublication(publication)">
-
+        <ion-row *ngIf="publication.role_admin" (click)="openPublicationAdmin(publication)">
+          <ion-col>
+            <img src="https://picsum.photos/2560/2048">
           </ion-col>
+          <ion-col>
+            <ion-card-content class="description">
+              <ion-list>
+                <ion-card-title><b>{{publication.rol}}</b></ion-card-title> <br/>
+                <ion-icon name="person" slot="start"></ion-icon>
+                <ion-label> {{publication.name }} {{publication.last_name}}</ion-label> <br/>
+                <ion-icon name="call" slot="start"></ion-icon> 
+                <ion-label>  {{publication.phone }} </ion-label> <br/>
+                <ion-icon name="calendar" slot="start"></ion-icon> 
+                <ion-label>  {{publication.date_ex }} </ion-label>
+              </ion-list>
+            </ion-card-content>
+          </ion-col>
+        </ion-row>
+        <ion-row>
           <ion-col *ngIf="publication.role_user" class="right" size="2">
               <ion-button (click)="sendComment()" fill=clear class="button">
                 <ion-icon name= "logo-whatsapp" class="icon2"></ion-icon>
               </ion-button>
           </ion-col>
-          <ion-col *ngIf="!publication.role_user" class="right" size="4">
+          <ion-col *ngIf="publication.role_admin" class="right" size="4">
             <ion-button [routerLink]="['/update-publication/', publication.id]" fill=clear class="button">
               <ion-icon name= "create-outline" class="icon2"></ion-icon>
             </ion-button>

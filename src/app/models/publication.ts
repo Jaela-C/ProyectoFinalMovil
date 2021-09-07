@@ -10,4 +10,5 @@ export interface PublicationInterface{
     id_user: string;
     // image: string;
     role_user: string;
+    role_admin: string;
 }

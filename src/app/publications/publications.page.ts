@@ -3,6 +3,7 @@ import { AuthenticateService } from '../services/authentication.service';
 import { PublicationsService } from '../services/publications.service';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { PublicationComponent } from '../component/publication/publication.component';
+import { PublicationsadminComponent } from '../component/publicationsadmin/publicationsadmin.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
@@ -50,11 +51,25 @@ export class PublicationsPage implements OnInit {
       }
     })
   }
+  
   openPublication(publication){
+    console.log('no debe')
     this.modal.create({
       component: PublicationComponent,
       componentProps : {
         publication: publication
+      }
+    }).then( (modal) => modal.present()
+    )
+  }
+
+  openPublicationAdmin(publication){
+    console.log('entra')
+    console.log(publication)
+    this.modal.create({
+      component: PublicationsadminComponent,
+      componentProps : {
+        publicationsadmin: publication
       }
     }).then( (modal) => modal.present()
     )

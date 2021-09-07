@@ -1,17 +1,7 @@
-
 <ion-content [fullscreen]="true">
-
   <div id="container">
     <ion-slides>
-      <ion-slide *ngFor="let item of arrayInfo">
-        <ion-card>
-            <img class="ion-img-internal" src="{{item.image}}">
-            <ion-card-header>
-                <h6>{{item.text}}</h6>
-            </ion-card-header>
-            
-        </ion-card>
-      </ion-slide>
+      <ion-slide *ngFor="let item of arrayInfo"><img src="{{item.image}}"></ion-slide>
     </ion-slides>
   </div>
 </ion-content>

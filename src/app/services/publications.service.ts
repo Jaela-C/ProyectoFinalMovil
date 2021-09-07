@@ -30,7 +30,8 @@ export class PublicationsService {
     id: '',
     id_user: 'Revisar',
     // image: '',
-    role_user: ''
+    role_user: '',
+    role_admin: '',
   };
 
   create(newpublication: PublicationInterface) {
@@ -63,7 +64,7 @@ export class PublicationsService {
       return publications.map( doc => {
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
-        data.role_user;
+        data.role_admin = "ADMIN";
         return data;
       })
     }))
@@ -82,6 +83,10 @@ export class PublicationsService {
   }
 
   getPublication(comment_id : string){
+    return this.ngFirestore.collection('publications').doc(comment_id).valueChanges()
+  }
+
+  getPublicationFoundation(comment_id : string){
     return this.ngFirestore.collection('publications').doc(comment_id).valueChanges()
   }
 
