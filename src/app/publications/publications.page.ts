@@ -53,7 +53,6 @@ export class PublicationsPage implements OnInit {
   }
   
   openPublication(publication){
-    console.log('no debe')
     this.modal.create({
       component: PublicationComponent,
       componentProps : {
@@ -64,7 +63,6 @@ export class PublicationsPage implements OnInit {
   }
 
   openPublicationAdmin(publication){
-    console.log('entra')
     console.log(publication)
     this.modal.create({
       component: PublicationsadminComponent,

@@ -5,6 +5,7 @@ import { comments } from '../models/comments';
 import * as firebase from 'firebase/app';
 import { Router } from '@angular/router';
 import { PublicationInterface } from '../models/publication';
+import { AuthenticateService } from './authentication.service';
 
 
 @Injectable({
@@ -13,29 +14,39 @@ import { PublicationInterface } from '../models/publication';
 export class PublicationsService {
 
   data: any;
+  infoUser: any;
 
   constructor(
-    private ngFirestore: AngularFirestore, 
+    private ngFirestore: AngularFirestore,
+    public authService: AuthenticateService,
     private router: Router,
   ) {}
 
-  publication: PublicationInterface = {
-    date_ex: '',
-    description: '',
-    // image_user: '',
-    last_name: '',
-    name: '',
-    phone: 0,
-    title: '',
-    id: '',
-    id_user: 'Revisar',
-    // image: '',
-    role_user: '',
-    role_admin: '',
-  };
-
-  create(newpublication: PublicationInterface) {
-    console.log('adadsasd', this.data)
+  registerPublication(value) {
+    return new Promise<any>((resolve, reject) => {
+      this.authService.userDetails().subscribe(user => {
+        if(user != null){
+          this.infoUser = this.ngFirestore.collection('foundations').doc(user.uid).get().subscribe( userInfo => {
+            if(userInfo.data() !== undefined){
+              this.ngFirestore.collection('publications').doc().set({
+                date_ex: value.date_ex,
+                description: value.description,
+                image_user: 'image.png',
+                last_name: value.last_name,
+                name: value.name,
+                phone: value.phone,
+                title: value.title,
+                id_user: user.uid,
+                image: 'image.png',
+                comments: []
+              }).then((res) => {
+                resolve(res)
+              }).catch(err => reject(err));
+            }
+          })
+        }
+      })
+    });
     //return this.ngFirestore.collection('publications').add(newpublication);
   }
 
@@ -59,7 +70,7 @@ export class PublicationsService {
   }
 
   getPublicationsFoundation(id){
-    console.log(id)
+    console.log('userFoundation',id)
     return this.ngFirestore.collection('publications', ref => ref.where('id_user', "==", id)).snapshotChanges().pipe(map( publications => {
       return publications.map( doc => {
         const data = doc.payload.doc.data() as PublicationInterface;
