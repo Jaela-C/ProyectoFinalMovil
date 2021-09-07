@@ -1,20 +1,14 @@
-import { Component, NgModule, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavParams, ModalController } from '@ionic/angular';
 import { PublicationsService } from '../../services/publications.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticateService } from '../../services/authentication.service';
 import { commentsfoundations } from 'src/app/models/commentsfoundations';
-import { CommonModule } from '@angular/common';  
-import { BrowserModule } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-publicationsadmin',
   templateUrl: './publicationsadmin.component.html',
   styleUrls: ['./publicationsadmin.component.scss'],
-})
-
-@NgModule({
-  imports: [CommonModule],
 })
 
 export class PublicationsadminComponent implements OnInit {

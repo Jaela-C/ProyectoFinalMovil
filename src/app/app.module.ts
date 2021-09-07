@@ -14,11 +14,12 @@ import { AngularFireModule } from '@angular/fire' ;
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { PublicationComponent } from './component/publication/publication.component';
+import { PublicationsadminComponent } from './component/publicationsadmin/publicationsadmin.component';
 import { FormsModule } from '@angular/forms'
 
 @NgModule({
-  declarations: [AppComponent, PublicationComponent],
-  entryComponents: [ PublicationComponent],
+  declarations: [AppComponent, PublicationComponent, PublicationsadminComponent],
+  entryComponents: [ PublicationComponent, PublicationsadminComponent],
   imports: [FormsModule, BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
