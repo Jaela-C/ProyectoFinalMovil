@@ -34,7 +34,7 @@
           </ion-col>
           <ion-col>
             <ion-card-content class="description">
-              <ion-list>
+              <ion-list class="list">
                 <ion-card-title><b>{{publication.rol}}</b></ion-card-title> <br/>
                 <ion-icon name="person" slot="start"></ion-icon>
                 <ion-label> {{publication.name }} {{publication.last_name}}</ion-label> <br/>
@@ -47,6 +47,7 @@
           </ion-col>
         </ion-row>
         <ion-row>
+          <ion-col class="left" (click)="openPublication(publication)"></ion-col>
           <ion-col *ngIf="publication.role_user" class="right" size="2">
               <ion-button (click)="sendComment()" fill=clear class="button">
                 <ion-icon name= "logo-whatsapp" class="icon2"></ion-icon>

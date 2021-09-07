@@ -1,10 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title></ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" [fullscreen]="true">
   <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
   <div class="containerForm">
     <ion-avatar class="image">

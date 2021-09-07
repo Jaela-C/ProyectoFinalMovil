@@ -1,6 +1,6 @@
 #container {
   text-align: center;
-
+  background-color: #5081E5;
   position: absolute;
   left: 0;
   right: 0;
@@ -43,7 +43,9 @@ ion-card {
 }
 
 ion-content {
-  --ion-background-color: #f0f8ff
+  --ion-background-color: #f0f8ff;
+  border-style: none;
+  border: none;
 }
 
 h6 {
@@ -51,6 +53,7 @@ h6 {
 }
 .footer{
   background-color: #5081E5;
+  border-style: none;
   border: none;
   text-align: right;
 }
@@ -63,4 +66,7 @@ h6 {
   font-size: 15px;
   padding: 12px;
   margin: 5px;
+}
+.content{
+  background-color: #5081E5;
 }

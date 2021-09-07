@@ -1,9 +1,4 @@
-<ion-header>
-  <ion-toolbar color="blueryb">
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding" color="aliceblue">
+<ion-content class="ion-padding" color="aliceblue" [fullscreen]="true">
   <form class="form" [formGroup]="validations_form" (ngSubmit)="registerFoundation(validations_form.value)">
     <div class="containerForm">
       <ion-avatar class="image">
@@ -89,7 +84,4 @@
     </p>
   </div>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="blueryb">
-  </ion-toolbar>
-</ion-footer>
+

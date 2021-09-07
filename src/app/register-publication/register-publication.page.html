@@ -1,9 +1,4 @@
-<ion-header>
-  <ion-toolbar color="blueryb">
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding" color="aliceblue">
+<ion-content class="ion-padding" color="aliceblue" [fullscreen]="true">
   <form class="form" [formGroup]="validations_form" (ngSubmit)="registerPublication(validations_form.value)">
     <div class="containerForm">
       <ion-avatar class="image">
@@ -98,7 +93,4 @@
       <button [routerLink]="['/publications']" class="submit-btn1" shape="full" expand="block" >CANCELAR</button>
     </div>
 </ion-content>
-<ion-footer>
-  <ion-toolbar color="blueryb">
-  </ion-toolbar>
-</ion-footer>
+
