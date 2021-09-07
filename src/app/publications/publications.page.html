@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor = "let publication of publicationsList">
+  <ion-card *ngFor = "let publication of publicationsList" class="card">
       <ion-grid>
         <ion-row *ngIf="publication.role_user" (click)="openPublication(publication)">
           <ion-col>
@@ -16,7 +16,7 @@
           </ion-col>
           <ion-col>
             <ion-card-content class="description">
-              <ion-list>
+              <ion-list class="list">
                 <ion-card-title><b>{{publication.title}}</b></ion-card-title> <br/>
                 <ion-icon name="person" slot="start"></ion-icon>
                 <ion-label> {{publication.name }} {{publication.last_name}}</ion-label> <br/>

@@ -15,14 +15,15 @@
     margin-right: 5px;
 }
 .icon2{
-    color: #5081E5;
+    color: #FFFFFF;
 }
 .button{
     background-color: Transparent;
     background-repeat:no-repeat;
     border: none;
     cursor:pointer;
-    overflow: hidden;     
+    overflow: hidden;
+    border: #FFFFFF solid 1px;
 }
 .left{
     width: 80%;
@@ -35,4 +36,11 @@
 }
 .description{
     padding: 0;
+}
+.card{
+    background-color: #5081E5;
+}
+.list{
+    background-color: #5081E5;
+    color: #FFFFFF;
 }
