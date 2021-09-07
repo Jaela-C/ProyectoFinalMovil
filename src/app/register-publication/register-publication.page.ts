@@ -12,8 +12,6 @@ import { PublicationsService } from '../services/publications.service';
 })
 export class RegisterPublicationPage implements OnInit {
 
-  id_user_data: any;
-  iduser: any;
   validations_form: FormGroup;
   errorMessage ='';
 
@@ -21,7 +19,6 @@ export class RegisterPublicationPage implements OnInit {
     private navCtrl: NavController,
     private publicationService: PublicationsService,
     private formBuilder: FormBuilder,
-    private afAuth: AngularFireAuth
   ) {
 
   }
@@ -54,8 +51,6 @@ export class RegisterPublicationPage implements OnInit {
       date_ex: new FormControl('', Validators.compose([
         Validators.required
       ])),
-      role_user: 'ADMIN',
-      comments: Array 
     });
   }
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -88,18 +83,17 @@ export class RegisterPublicationPage implements OnInit {
       {type: 'required', message: 'La fecha es requerida'},
     ]
   };
-
-  getIdUser(){
-    this.id_user_data = this.afAuth.user
-  }
   
   registerPublication(value){
-    console.log(value)
-    this.publicationService.create(value)
-  }
-
-  goToLoginPage(){
-    this.navCtrl.navigateForward('/publications');
+    this.publicationService.registerPublication(value)
+    .then(res => {
+      console.log(res);
+      this.errorMessage='';
+      this.navCtrl.navigateForward('/publications');
+    }, err => {
+      this.errorMessage = err.message;
+    }
+    );
   }
 
 }
