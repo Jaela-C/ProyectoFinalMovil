@@ -1,9 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-import { map } from 'rxjs/operators';
 import { PublicationsService } from '../services/publications.service';
+import {
+  AngularFireStorage,
+  AngularFireUploadTask,
+} from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthenticateService } from '../services/authentication.service';
+
+export interface imgFile {
+  name: string;
+  filepath: string;
+  size: number;
+}
+export interface PublicationInterface{
+  date_ex: string;
+  description: string;
+  // image_user: string;
+  last_name: string;
+  name: any;
+  phone: number;
+  title: string;
+  id_user: string;
+  image: string;
+}
 
 @Component({
   selector: 'app-register-publication',
@@ -14,16 +37,63 @@ export class RegisterPublicationPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage ='';
+  uid: string;
+  name: string;
+  FormToSend: FormGroup;
+  imageURL: string;
+  counter: number;
+
+    //Files
+    fileUploadTask: AngularFireUploadTask;
+
+    // Upload progress
+    percentageVal: Observable<number>;
+  
+    // Track file uploading with snapshot
+    trackSnapshot: Observable<any>;
+  
+    // Uploaded File URL
+    UploadedImageURL: Observable<string>;
+  
+    // Uploaded image collection
+    files: Observable<imgFile[]>;
+  
+    // Image specifications
+    imgName: string;
+    imgSize: number;
+  
+    // File uploading status
+    isFileUploading: boolean;
+    isFileUploaded: boolean;
 
   constructor(
     private navCtrl: NavController,
     private publicationService: PublicationsService,
     private formBuilder: FormBuilder,
+    private afStorage: AngularFireStorage,
+    private authService: AuthenticateService,
+    private db: AngularFirestore,
   ) {
+    this.isFileUploading = false;
+    this.isFileUploaded = false;
 
   }
 
   ngOnInit() {
+
+    this.authService.userDetails().subscribe(
+      (user) => {
+        if (user !== null) {
+          this.uid = user.uid;
+          this.counter = 0;
+        } else {
+          this.navCtrl.navigateBack('');
+        }
+      },
+      (err) => {
+        console.log('err', err);
+      }
+    );
 
     this.validations_form = this.formBuilder.group({
       
@@ -83,17 +153,85 @@ export class RegisterPublicationPage implements OnInit {
       {type: 'required', message: 'La fecha es requerida'},
     ]
   };
+
+  onSubmit(value) {
+    console.log('image', this.imageURL)
+    console.log('uid', this.uid)
+      console.log('registro', value)
+      this.FormToSend = this.formBuilder.group({
+        date_ex: value.date_ex,
+        description: value.description,
+        // image_user: string;
+        last_name: value.last_name,
+        name: value.name,
+        phone: value.phone,
+        title: value.title,
+        id_user: this.uid,
+        image: this.imageURL,
+        comments: []
+      });
+      this.publicationService
+        .registerPublication(this.FormToSend.value)
+        .then(() => {
+          this.FormToSend.reset();
+          this.navCtrl.navigateForward('/publications');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+  }
   
-  registerPublication(value){
-    this.publicationService.registerPublication(value)
-    .then(res => {
-      console.log(res);
-      this.errorMessage='';
-      this.navCtrl.navigateForward('/publications');
-    }, err => {
-      this.errorMessage = err.message;
+  // Image files
+  uploadImage(event: FileList) {
+    const file = event.item(0);
+
+    // Image validation
+    if (file.type.split('/')[0] !== 'image') {
+      console.log('File type is not supported!');
+      return;
     }
+
+    this.isFileUploading = true;
+    this.isFileUploaded = false;
+    this.imgName = file.name;
+
+    // // Storage path for user profile
+    // const fileStoragePathProfile = `publications/${this.uid}_${file.name}`;
+
+    // Storage path for publications
+    this.counter += 1
+    const fileStoragePath = `publications/${file.name}-${this.counter}`;
+
+    // Image reference
+    const imageRef = this.afStorage.ref(fileStoragePath);
+    // File upload task
+    this.fileUploadTask = this.afStorage.upload(fileStoragePath, file);
+
+    // Show uploading progress
+    this.percentageVal = this.fileUploadTask.percentageChanges();
+    this.trackSnapshot = this.fileUploadTask.snapshotChanges().pipe(
+      finalize(() => {
+        // Retreive uploaded image storage path
+        this.UploadedImageURL = imageRef.getDownloadURL();
+        this.UploadedImageURL.subscribe(
+          (resp) => {
+            this.storeFilesFirebase(resp);
+            this.isFileUploading = false;
+            this.isFileUploaded = true;
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }),
+      tap((snap) => {
+        this.imgSize = snap.totalBytes;
+      })
     );
+  }
+  
+  storeFilesFirebase(image) {
+    this.imageURL = image;
   }
 
 }

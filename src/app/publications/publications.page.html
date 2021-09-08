@@ -12,7 +12,7 @@
       <ion-grid>
         <ion-row *ngIf="publication.role_user" (click)="openPublication(publication)">
           <ion-col>
-            <img src="https://picsum.photos/2560/2048">
+            <img src={{publication.image}}>
           </ion-col>
           <ion-col>
             <ion-card-content class="description">
@@ -30,7 +30,7 @@
         </ion-row>
         <ion-row *ngIf="publication.role_admin" (click)="openPublicationAdmin(publication)">
           <ion-col>
-            <img src="https://picsum.photos/2560/2048">
+            <img src={{publication.image}}>
           </ion-col>
           <ion-col>
             <ion-card-content class="description">
@@ -63,8 +63,6 @@
         </ion-col>
         </ion-row>
       </ion-grid>
-    
-    
     
   </ion-card>
 </ion-content>

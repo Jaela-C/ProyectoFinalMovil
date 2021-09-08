@@ -4,7 +4,7 @@ import { PublicationsService } from '../services/publications.service';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { PublicationComponent } from '../component/publication/publication.component';
 import { PublicationsadminComponent } from '../component/publicationsadmin/publicationsadmin.component';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,14 +19,15 @@ export class PublicationsPage implements OnInit {
   public infoFoundation: any;
   private router: Router;
   public userProfile: boolean;
-
+    
   constructor(
     public authService: AuthenticateService,
     private publicationService: PublicationsService,
     private modal: ModalController,
     public actionSheetController: ActionSheetController,
     private db: AngularFirestore,
-  ) { }
+  ) {
+   }
 
   ngOnInit() {
     this.authService.userDetails().subscribe(user => {
@@ -51,7 +52,7 @@ export class PublicationsPage implements OnInit {
       }
     })
   }
-  
+
   openPublication(publication){
     this.modal.create({
       component: PublicationComponent,
