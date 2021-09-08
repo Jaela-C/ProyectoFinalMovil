@@ -33,13 +33,10 @@ export class PublicationsadminComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('pubñis', this.publicationsadmin)
     this.PublicationsService.getPublicationFoundation(this.publicationsadmin.id).subscribe( roomFoundation => {
-      console.log('room', roomFoundation)
       this.room = roomFoundation;
     })
     this.publicationsadmin = this.navparamsfoundation.get('publicationsadmin')
-    console.log('publicaciones fundacion', this.publicationsadmin)
   }
 
   closePublication(){
@@ -50,8 +47,7 @@ export class PublicationsadminComponent implements OnInit {
     this.authService.userDetails().subscribe(user => {
       if(user != null){
           this.db.collection('foundations').doc(user.uid).get().subscribe( foundationInfo => {
-          this.infoFoundation = foundationInfo.data()
-            if(this.infoFoundation != undefined){
+            this.infoFoundation = foundationInfo.data()
               const comentario : commentsfoundations = {
                 content : this.msg,
                 date: new Date(),
@@ -60,7 +56,9 @@ export class PublicationsadminComponent implements OnInit {
                 last_name_user: this.infoFoundation.last_name,
               }
               this.PublicationsService.sendComment(comentario, this.publicationsadmin.id)
-            }
+              // .then(() => {
+              //   <commentsfoundations> {}
+              // })
         });
       }
       else {

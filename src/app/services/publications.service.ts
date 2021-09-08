@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { PublicationInterface } from '../models/publication';
 import { AuthenticateService } from './authentication.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -23,30 +22,8 @@ export class PublicationsService {
   ) {}
 
   registerPublication(value) {
-    console.log('valudad', value)
-    if(value !== undefined){
-    return new Promise<any>((resolve, reject) => {
-      this.authService.userDetails().subscribe(user => {
-        if(user != null){
-          this.ngFirestore.collection('publications').add({
-            date_ex: value.date_ex,
-            description: value.description,
-            image_user: 'image.png',
-            last_name: value.last_name,
-            name: value.name,
-            phone: value.phone,
-            title: value.title,
-            id_user: user.uid,
-            image: 'image.png',
-            comments: []
-          }).then((res) => {
-            resolve(res)
-            value={};
-          }).catch(err => reject(err));
-        }
-      })
-    });
-    }
+    console.log('registro de publicación', value)
+    return this.ngFirestore.collection('publications').add(value);
   }
 
   getPublicationID(id) {
@@ -106,6 +83,8 @@ export class PublicationsService {
   sendComment(comment: comments, publication_id: string){
     this.ngFirestore.collection('publications').doc(publication_id).update({
       comments: firebase.default.firestore.FieldValue.arrayUnion(comment),
+    }).then(() => {
+      <comments> {}
     })
   }
 

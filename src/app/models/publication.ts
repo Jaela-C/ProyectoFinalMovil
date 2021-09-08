@@ -8,7 +8,7 @@ export interface PublicationInterface{
     title: string;
     id: string;
     id_user: string;
-    // image: string;
+    image: string;
     role_user: string;
     role_admin: string;
 }
