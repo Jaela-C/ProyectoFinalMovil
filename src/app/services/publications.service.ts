@@ -23,32 +23,30 @@ export class PublicationsService {
   ) {}
 
   registerPublication(value) {
+    console.log('valudad', value)
+    if(value !== undefined){
     return new Promise<any>((resolve, reject) => {
       this.authService.userDetails().subscribe(user => {
         if(user != null){
-          this.infoUser = this.ngFirestore.collection('foundations').doc(user.uid).get().subscribe( userInfo => {
-            //if(userInfo.data() !== undefined){
-              this.ngFirestore.collection('publications').doc().set({
-                date_ex: value.date_ex,
-                description: value.description,
-                image_user: 'image.png',
-                last_name: value.last_name,
-                name: value.name,
-                phone: value.phone,
-                title: value.title,
-                id_user: user.uid,
-                image: 'image.png',
-                comments: []
-              }).then((res) => {
-                resolve(res)
-                //value=[];
-              }).catch(err => reject(err));
-           // }
-          })
+          this.ngFirestore.collection('publications').add({
+            date_ex: value.date_ex,
+            description: value.description,
+            image_user: 'image.png',
+            last_name: value.last_name,
+            name: value.name,
+            phone: value.phone,
+            title: value.title,
+            id_user: user.uid,
+            image: 'image.png',
+            comments: []
+          }).then((res) => {
+            resolve(res)
+            value={};
+          }).catch(err => reject(err));
         }
       })
     });
-    //return this.ngFirestore.collection('publications').add(newpublication);
+    }
   }
 
   getPublicationID(id) {
@@ -73,10 +71,13 @@ export class PublicationsService {
   getPublicationsFoundation(id){
     console.log('userFoundation',id)
     return this.ngFirestore.collection('publications', ref => ref.where('id_user', "==", id)).snapshotChanges().pipe(map( publications => {
+      console.log('pub', publications)
       return publications.map( doc => {
+        console.log('doc', doc)
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
         data.role_admin = "ADMIN";
+        console.log('dadta', data)
         return data;
       })
     }))
