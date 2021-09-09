@@ -84,9 +84,9 @@
       </div>
       <div class="imagecon">
         <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="image"></ion-icon>Ingrese su imagen</ion-label>
-        <ion-button color="primary" size="medium">
+        <button class="imagebutton">
           <input type="file" (change)="uploadImage($event.target.files)" />
-        </ion-button>
+        </button>
         <!-- File upload progress bar -->
         <div *ngIf="percentageVal | async as percentage">
           Carga de la imagen: {{ percentage | number }}%
