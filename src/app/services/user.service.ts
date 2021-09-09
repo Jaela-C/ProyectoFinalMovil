@@ -30,7 +30,7 @@ export class UserService {
   }
 
   update(id, updateUser: UserInterface) {
-    firebase.default.auth().currentUser.updateEmail(updateUser.email).then( () => {
+    return firebase.default.auth().currentUser.updateEmail(updateUser.email).then( () => {
       this.ngFirestore
       .collection('users')
       .doc(id)

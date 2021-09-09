@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UpdatePublicationPageRoutingModule } from './update-publication-routing.module';
 
 import { UpdatePublicationPage } from './update-publication.page';
+import { FormatFileSizePipe } from './format-file-size.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { UpdatePublicationPage } from './update-publication.page';
     ReactiveFormsModule,
     UpdatePublicationPageRoutingModule
   ],
-  declarations: [UpdatePublicationPage]
+  declarations: [UpdatePublicationPage,
+    FormatFileSizePipe]
 })
 export class UpdatePublicationPageModule {}

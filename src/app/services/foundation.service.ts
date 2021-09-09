@@ -29,7 +29,7 @@ export class FoundationService {
   }
 
   update(id, updateFoundation: FoundationInterface) {
-    firebase.default.auth().currentUser.updateEmail(updateFoundation.email).then( () => {
+    return firebase.default.auth().currentUser.updateEmail(updateFoundation.email).then( () => {
       this.ngFirestore
       .collection('foundations')
       .doc(id)

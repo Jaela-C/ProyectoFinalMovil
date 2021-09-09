@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UpdateUserPageRoutingModule } from './update-user-routing.module';
 
 import { UpdateUserPage } from './update-user.page';
+import { FormatFileSizePipe } from './format-file-size.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { UpdateUserPage } from './update-user.page';
     ReactiveFormsModule,
     UpdateUserPageRoutingModule
   ],
-  declarations: [UpdateUserPage]
+  declarations: [UpdateUserPage,
+    FormatFileSizePipe]
 })
 export class UpdateUserPageModule {}
