@@ -92,6 +92,9 @@
           Carga de la imagen: {{ percentage | number }}%
           <ion-progress-bar value="{{ percentage / 100 }}"></ion-progress-bar>
         </div>
+        <div *ngIf="trackSnapshot | async as snap">
+          Tamaño de la imagen: {{ snap.totalBytes | formatFile }} 
+        </div>
       </div>
     </div>
       <div class="submit-btn">

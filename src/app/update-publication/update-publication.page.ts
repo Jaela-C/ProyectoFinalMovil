@@ -122,11 +122,8 @@ export class UpdatePublicationPage implements OnInit {
     this.isFileUploaded = false;
     this.imgName = file.name;
 
-    // // Storage path for user profile
-    // const fileStoragePathProfile = `publications/${this.uid}_${file.name}`;
-
     // Storage path for publications
-    const fileStoragePath = `publications/${file.name}`;
+    const fileStoragePath = `publications/${file.name}--${new Date}`;
 
     // Image reference
     const imageRef = this.afStorage.ref(fileStoragePath);

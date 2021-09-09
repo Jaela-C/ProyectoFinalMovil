@@ -4,6 +4,6 @@ export interface FoundationInterface{
     name: string;
     last_name: string;
     name_foundation: string;
-    photo: string;
+    image: string;
     rol: any;
 }

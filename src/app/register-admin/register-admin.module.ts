@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterAdminPageRoutingModule } from './register-admin-routing.module';
 
 import { RegisterAdminPage } from './register-admin.page';
+import { FormatFileSizePipe } from './format-file-size.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { RegisterAdminPage } from './register-admin.page';
     ReactiveFormsModule,
     RegisterAdminPageRoutingModule
   ],
-  declarations: [RegisterAdminPage]
+  declarations: [RegisterAdminPage,
+    FormatFileSizePipe]
 })
 export class RegisterAdminPageModule {}

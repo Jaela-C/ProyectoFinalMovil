@@ -22,7 +22,7 @@ export class ProfileAdminPage implements OnInit {
     last_name: '',
     name_foundation: '',
     email: '',
-    photo: '',
+    image: '',
     rol: '',
   };
 
@@ -51,7 +51,7 @@ export class ProfileAdminPage implements OnInit {
               last_name: this.infoFoundation.last_name,
               name_foundation: this.infoFoundation.name_foundation,
               email: this.infoFoundation.email,
-              photo: 'img.png',
+              image: this.infoFoundation.image,
               rol: 'Administrador'
             }
             this.foundation = foundationinfo;
