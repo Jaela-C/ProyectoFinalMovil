@@ -41,7 +41,6 @@ export class RegisterPublicationPage implements OnInit {
   name: string;
   FormToSend: FormGroup;
   imageURL: string;
-  counter: number;
 
     //Files
     fileUploadTask: AngularFireUploadTask;
@@ -85,7 +84,6 @@ export class RegisterPublicationPage implements OnInit {
       (user) => {
         if (user !== null) {
           this.uid = user.uid;
-          this.counter = 0;
         } else {
           this.navCtrl.navigateBack('');
         }
@@ -168,7 +166,7 @@ export class RegisterPublicationPage implements OnInit {
         title: value.title,
         id_user: this.uid,
         image: this.imageURL,
-        comments: []
+        comments: [new Array]
       });
       this.publicationService
         .registerPublication(this.FormToSend.value)
@@ -199,8 +197,7 @@ export class RegisterPublicationPage implements OnInit {
     // const fileStoragePathProfile = `publications/${this.uid}_${file.name}`;
 
     // Storage path for publications
-    this.counter += 1
-    const fileStoragePath = `publications/${file.name}-${this.counter}`;
+    const fileStoragePath = `publications/${file.name}`;
 
     // Image reference
     const imageRef = this.afStorage.ref(fileStoragePath);

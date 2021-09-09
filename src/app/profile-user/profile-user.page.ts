@@ -51,7 +51,7 @@ export class ProfileUserPage implements OnInit {
               name: this.infoUser.name,
               last_name: this.infoUser.last_name,
               email: this.infoUser.email,
-              image: 'img.png',
+              image: this.infoUser.image,
               rol: 'Usuario',
             }
             this.user = userinfo;

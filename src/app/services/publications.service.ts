@@ -31,7 +31,7 @@ export class PublicationsService {
   }
 
   update(id, updatePublication: PublicationInterface) {
-      this.ngFirestore
+      return this.ngFirestore
       .collection('publications')
       .doc(id)
       .update(updatePublication)

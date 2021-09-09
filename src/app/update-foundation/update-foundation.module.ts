@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { UpdateFoundationPageRoutingModule } from './update-foundation-routing.module';
 
 import { UpdateFoundationPage } from './update-foundation.page';
+import { FormatFileSizePipe } from './format-file-size.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { UpdateFoundationPage } from './update-foundation.page';
     ReactiveFormsModule,
     UpdateFoundationPageRoutingModule
   ],
-  declarations: [UpdateFoundationPage]
+  declarations: [UpdateFoundationPage,
+    FormatFileSizePipe]
 })
 export class UpdateFoundationPageModule {}
