@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FoundationService } from '../services/foundation.service';
 import { Observable } from 'rxjs';
@@ -20,7 +20,7 @@ export interface imgFile {
 })
 export class UpdateFoundationPage implements OnInit {
 
-  editForm: FormGroup;
+  validations_form: FormGroup;
   id: any;
   uid: string;
   imageURL: string
@@ -61,7 +61,7 @@ export class UpdateFoundationPage implements OnInit {
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.foundationService.getUser(this.id).subscribe((data) => {
-      this.editForm = this.formBuilder.group({
+      this.validations_form = this.formBuilder.group({
         name: data['name'],
         last_name: data['last_name'],
         email: data['email'],
@@ -74,6 +74,30 @@ export class UpdateFoundationPage implements OnInit {
   }
 
   ngOnInit() {
+
+    this.validations_form = this.formBuilder.group({
+      name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      last_name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      name_foundation:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      email:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
+      ])),
+      password: new FormControl('', Validators.compose([
+        Validators.minLength(8),
+        Validators.required
+      ])),
+    });
+    
     this.authService.userDetails().subscribe(
       (user) => {
         if (user !== null) {
@@ -87,7 +111,7 @@ export class UpdateFoundationPage implements OnInit {
       }
     );
 
-    this.editForm = this.formBuilder.group({
+    this.validations_form = this.formBuilder.group({
       name: [''],
       last_name: [''],
       email: [''],
@@ -96,6 +120,30 @@ export class UpdateFoundationPage implements OnInit {
       name_foundation: [''],
     })    
   }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  validation_messages={
+    // eslint-disable-next-line quote-props
+    'name':[
+      {type: 'required', message: 'El nombre es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'last_name':[
+      {type: 'required', message: 'El apellido es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un apellido válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'name_foundation':[
+      {type: 'required', message: 'El nombre de la fundación es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'email':[
+      {type: 'required', message: 'El email es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un correo válido'}
+    ],
+  };
 
   // Image files
   uploadImage(event: FileList) {
@@ -146,11 +194,11 @@ export class UpdateFoundationPage implements OnInit {
     this.imageURL = image;
   }
 
-  onSubmit() {
+  onSubmit(value) {
     this.dataFoundation = this.formBuilder.group({
-      last_name: this.editForm.value.last_name,
-      name: this.editForm.value.name,
-      email: this.editForm.value.email,
+      last_name: value.last_name,
+      name: value.name,
+      email: value.email,
       image: this.imageURL,
     })
     this.foundationService.update(this.id, this.dataFoundation.value)

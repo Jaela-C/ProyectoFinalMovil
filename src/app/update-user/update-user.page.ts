@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { FormGroup, FormBuilder } from "@angular/forms";
+import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
@@ -21,7 +21,7 @@ export interface imgFile {
 })
 export class UpdateUserPage implements OnInit {
 
-  editForm: FormGroup;
+  validations_form: FormGroup;
   dataUser: FormGroup;
   id: any;
   uid: string;
@@ -62,7 +62,7 @@ export class UpdateUserPage implements OnInit {
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.userService.getUser(this.id).subscribe((data) => {
-      this.editForm = this.formBuilder.group({
+      this.validations_form = this.formBuilder.group({
         name: data['name'],
         last_name: data['last_name'],
         email: data['email'],
@@ -87,7 +87,22 @@ export class UpdateUserPage implements OnInit {
       }
     );
 
-    this.editForm = this.formBuilder.group({
+    this.validations_form = this.formBuilder.group({
+      name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      last_name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      email:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
+      ]))
+    });
+
+    this.validations_form = this.formBuilder.group({
       name: [''],
       last_name: [''],
       email: [''],
@@ -95,6 +110,25 @@ export class UpdateUserPage implements OnInit {
       role: [''],
     })    
   }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  validation_messages={
+    // eslint-disable-next-line quote-props
+    'name':[
+      {type: 'required', message: 'El nombre es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'last_name':[
+      {type: 'required', message: 'El apellido es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un apellido válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'email':[
+      {type: 'required', message: 'El email es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un correo válido'}
+    ],
+  };
 
   // Image files
   uploadImage(event: FileList) {
@@ -145,11 +179,11 @@ export class UpdateUserPage implements OnInit {
     this.imageURL = image;
   }
 
-  onSubmit() {
+  onSubmit(value) {
     this.dataUser = this.formBuilder.group({
-      last_name: this.editForm.value.last_name,
-      name: this.editForm.value.name,
-      email: this.editForm.value.email,
+      last_name: value.last_name,
+      name: value.name,
+      email: value.email,
       image: this.imageURL,
     })
     this.userService.update(this.id, this.dataUser.value)

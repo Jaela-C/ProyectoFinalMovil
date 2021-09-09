@@ -1,5 +1,5 @@
 <ion-content class="ion-padding" [fullscreen]="true">
-  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
   <div class="containerForm">
     <ion-avatar class="image">
       <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
@@ -22,20 +22,45 @@
         <ion-label class="colorText" position="floating">Nombre</ion-label>
         <ion-input formControlName="name" type="text" required></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.name">
+          <div class="error-message"
+            *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Apellido</ion-label>
         <ion-input formControlName="last_name" type="text" required></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.last_name">
+          <div class="error-message"
+            *ngIf="validations_form.get('last_name').hasError(validation.type) && (validations_form.get('last_name').dirty || validations_form.get('last_name').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Correo electrónico</ion-label>
         <ion-input formControlName="email" type="text" required></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="error-message"
+            *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
   </div>
   <ion-row>
     <ion-col>
-      <button type="submit" class="submit-btn" shape="full" expand="block" >ACTUALIZAR PERFIL</button>
+      <button type="submit" class="submit-btn" [disabled]="!validations_form.valid" shape="full" expand="block" >ACTUALIZAR PERFIL</button>
     </ion-col>
   </ion-row>
   <ion-row>
