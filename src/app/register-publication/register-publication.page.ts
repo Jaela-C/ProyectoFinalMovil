@@ -100,15 +100,15 @@ export class RegisterPublicationPage implements OnInit {
       ])),
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-zA-Z]+')
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[a-zA-Z]+')
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
       ])),
       phone:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[0-9]+')
+        Validators.pattern('^[1-9]{1}[0-9]{8}')
       ])),
       // image: new FormControl('', Validators.compose([
       //   Validators.required
@@ -140,7 +140,7 @@ export class RegisterPublicationPage implements OnInit {
     // eslint-disable-next-line quote-props
     'phone':[
       {type: 'required', message: 'El número de teléfono es requerido'},
-      {type: 'pattern', message: 'Por favor ingrese un número de teléfono válido'}
+      {type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
     ],
     // eslint-disable-next-line quote-props
     'description':[

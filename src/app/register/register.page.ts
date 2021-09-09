@@ -25,11 +25,11 @@ export class RegisterPage implements OnInit {
     this.validations_form = this.formBuilder.group({
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+')
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+')
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
       ])),
       email:new FormControl('', Validators.compose([
         Validators.required,
