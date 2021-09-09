@@ -49,7 +49,7 @@
         <ion-row>
           <ion-col class="left" (click)="openPublication(publication)"></ion-col>
           <ion-col *ngIf="publication.role_user" class="right" size="2">
-              <ion-button href="https://api.whatsapp.com/send?phone=593987610019&text=Quiero%20ayudar" fill=clear class="button">
+              <ion-button href="https://api.whatsapp.com/send?phone=593{{publication.phone}}&text=Hola%20{{publication.name}}%20Quiero%20ayudar!" fill=clear class="button">
                 <ion-icon name= "logo-whatsapp" class="icon2"></ion-icon>
               </ion-button>
           </ion-col>
