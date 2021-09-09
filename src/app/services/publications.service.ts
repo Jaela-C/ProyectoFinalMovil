@@ -50,11 +50,9 @@ export class PublicationsService {
     return this.ngFirestore.collection('publications', ref => ref.where('id_user', "==", id)).snapshotChanges().pipe(map( publications => {
       console.log('pub', publications)
       return publications.map( doc => {
-        console.log('doc', doc)
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
         data.role_admin = "ADMIN";
-        console.log('dadta', data)
         return data;
       })
     }))
@@ -80,11 +78,19 @@ export class PublicationsService {
     return this.ngFirestore.collection('publications').doc(comment_id).valueChanges()
   }
 
-  sendComment(comment: comments, publication_id: string){
-    this.ngFirestore.collection('publications').doc(publication_id).update({
-      comments: firebase.default.firestore.FieldValue.arrayUnion(comment),
+  sendComment(comment, publication_id: string){
+    console.log('comentarios', comment)
+    const array: comments = {
+      content: comment.content,
+      date: comment.date,
+      id_user: comment.id_user,
+      name_user: comment.name_user,
+      last_name_user: comment.last_name_user,
+    }
+    return this.ngFirestore.collection('publications').doc(publication_id).update({
+      comments: firebase.default.firestore.FieldValue.arrayUnion(array),
     }).then(() => {
-      <comments> {}
+      comment = null
     })
   }
 

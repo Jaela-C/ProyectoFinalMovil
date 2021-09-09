@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
@@ -19,6 +19,7 @@ export interface imgFile {
 export class UpdatePublicationPage implements OnInit {
 
   editForm: FormGroup;
+  validations_form: FormGroup;
   dataPublication: FormGroup
   id: any;
   imageURL: string
@@ -57,7 +58,7 @@ export class UpdatePublicationPage implements OnInit {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.publicationService.getPublicationID(this.id).subscribe((data) => {
       console.log('datos publiact', data)
-      this.editForm = this.formBuilder.group({
+      this.validations_form = this.formBuilder.group({
         date_ex: data['date_ex'],
         description: data['description'],
         image_user: data['image_user'],
@@ -73,30 +74,78 @@ export class UpdatePublicationPage implements OnInit {
   }
 
   ngOnInit() {
-    this.editForm = this.formBuilder.group({
-      date_ex: [''],
-      description: [''],
-      image_user: [''],
-      last_name: [''],
-      name: [''],
-      phone: [''],
-      title: [''],
-      id_user: [''],
-      image: [''],
-    })
+
+    this.validations_form = this.formBuilder.group({
+      
+      title:new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      last_name:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+      ])),
+      phone:new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('^[1-9]{1}[0-9]{8}')
+      ])),
+      // image: new FormControl('', Validators.compose([
+      //   Validators.required
+      // ])),
+      description: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+      date_ex: new FormControl('', Validators.compose([
+        Validators.required
+      ])),
+    });
   }
 
-  onSubmit() {
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  validation_messages={
+    // eslint-disable-next-line quote-props
+    'title':[
+      {type: 'required', message: 'El título es requerido'},
+    ],
+    // eslint-disable-next-line quote-props
+    'name':[
+      {type: 'required', message: 'El nombre es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'last_name':[
+      {type: 'required', message: 'El apellido es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un apellido válido'}
+    ],
+    // eslint-disable-next-line quote-props
+    'phone':[
+      {type: 'required', message: 'El número de teléfono es requerido'},
+      {type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
+    ],
+    // eslint-disable-next-line quote-props
+    'description':[
+      {type: 'required', message: 'La descripción es requerida'},
+    ],
+    // eslint-disable-next-line quote-props
+    'date_ex':[
+      {type: 'required', message: 'La fecha es requerida'},
+    ]
+  };
+
+  onSubmit(value) {
     console.log('datos actu', this.editForm)
     this.dataPublication = this.formBuilder.group({
-      date_ex: this.editForm.value.date_ex,
-      description: this.editForm.value.description,
-      image_user: this.editForm.value.image_user,
-      last_name: this.editForm.value.last_name,
-      name: this.editForm.value.name,
-      phone: this.editForm.value.phone,
-      title: this.editForm.value.title,
-      id_user: this.editForm.value.id_user,
+      date_ex: value.date_ex,
+      description: value.description,
+      image_user: value.image_user,
+      last_name: value.last_name,
+      name: value.name,
+      phone: value.phone,
+      title: value.title,
+      id_user: value.id_user,
       image: this.imageURL,
     })
     this.publicationService.update(this.id, this.dataPublication.value)

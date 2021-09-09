@@ -8,7 +8,10 @@
 </ion-header>
 <ion-content  class="container">
     <ion-card class="card">
-      <ion-card-content  class="image">
+      <ion-card-content  class="image" *ngIf = "publication.image === null">
+        <img src="https://www.afandaluzas.org/wp-content/uploads/2018/02/Manos-slide-1080x675.png">
+      </ion-card-content>
+      <ion-card-content  class="image" *ngIf = "publication.image !== null">
         <img src={{publication.image}}>
       </ion-card-content>
       <ion-item>

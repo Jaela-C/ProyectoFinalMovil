@@ -11,9 +11,13 @@
   <ion-card *ngFor = "let publication of publicationsList" class="card">
       <ion-grid>
         <ion-row *ngIf="publication.role_user" (click)="openPublication(publication)">
-          <ion-col>
+          <ion-col *ngIf = "publication.image === null">
+            <img src="https://www.afandaluzas.org/wp-content/uploads/2018/02/Manos-slide-1080x675.png">
+          </ion-col>
+          <ion-col *ngIf = "publication.image !== null">
             <img src={{publication.image}}>
           </ion-col>
+
           <ion-col>
             <ion-card-content class="description">
               <ion-list class="list">
@@ -29,7 +33,10 @@
           </ion-col>
         </ion-row>
         <ion-row *ngIf="publication.role_admin" (click)="openPublicationAdmin(publication)">
-          <ion-col>
+          <ion-col *ngIf = "publication.image === null">
+            <img src="https://www.afandaluzas.org/wp-content/uploads/2018/02/Manos-slide-1080x675.png">
+          </ion-col>
+          <ion-col *ngIf = "publication.image !== null">
             <img src={{publication.image}}>
           </ion-col>
           <ion-col>

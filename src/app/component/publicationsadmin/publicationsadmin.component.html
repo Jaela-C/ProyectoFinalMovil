@@ -8,7 +8,10 @@
 </ion-header>
 <ion-content  class="container">
     <ion-card class="card">
-      <ion-card-content  class="image">
+      <ion-card-content  class="image" *ngIf = "publicationsadmin.image === null">
+        <img src="https://www.afandaluzas.org/wp-content/uploads/2018/02/Manos-slide-1080x675.png">
+      </ion-card-content>
+      <ion-card-content  class="image" *ngIf = "publicationsadmin.image !== null">
         <img src={{publicationsadmin.image}}>
       </ion-card-content>
       <ion-item>
@@ -37,21 +40,23 @@
         </div>
         <ion-label class="coment">
           <h3>{{comment.name_user}} {{comment.last_name_user}}</h3>
-          <p class="coment">{{comment.content}}</p>
+          <p class="coment" >{{comment.content}}</p>
         </ion-label>
       </ion-item>
     </ion-list>
   </div>   
 </ion-content>
 <ion-footer>
+  <form [formGroup]="validations_form">
   <div class="containercomment">
-    <div class="write">
-      <ion-textarea [(ngModel)]="msg"></ion-textarea>
-    </div>
+      <div class="write">
+        <ion-textarea formControlName="content" ></ion-textarea>
+      </div>
     <div class="containerbutton">
-      <ion-button (click)="sendCommentFoundation()" fill=clear class="button">
+      <ion-button (click)="sendCommentFoundation(validations_form.value)" fill=clear class="button">
         <ion-icon name= "send-outline" class="icon"></ion-icon>
       </ion-button>
     </div>
   </div>
+</form>
 </ion-footer>
