@@ -4,7 +4,17 @@
     <ion-avatar class="image">
       <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
     </ion-avatar>
-
+    <div class="imagecon">
+      <ion-label>Cambiar foto</ion-label>
+      <button class="imagebutton">
+        <input type="file" (change)="uploadImage($event.target.files)" />
+      </button>
+      <!-- File upload progress bar -->
+      <div *ngIf="percentageVal | async as percentage">
+        Carga de la imagen: {{ percentage | number }}%
+        <ion-progress-bar value="{{ percentage / 100 }}"></ion-progress-bar>
+      </div>
+    </div>
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Nombre</ion-label>
         <ion-input formControlName="name" type="text" required></ion-input>
@@ -24,20 +34,6 @@
         <ion-label class="colorText" position="floating">Nombre de la fundación</ion-label>
         <ion-input formControlName="name_foundation" type="text" required></ion-input>
       </ion-item>
-      
-      <ion-button color="primary" size="medium">
-        <ion-label>Enviar Foto</ion-label>
-        <input type="file" (change)="uploadImage($event.target.files)" />
-      </ion-button>
-      <!-- File upload progress bar -->
-      <div *ngIf="percentageVal | async as percentage">
-        Carga de la imagen: {{ percentage | number }}%
-        <ion-progress-bar value="{{ percentage / 100 }}"></ion-progress-bar>
-      </div>
-    
-      <div *ngIf="trackSnapshot | async as snap">
-        Tamaño del archivo: {{ snap.totalBytes | formatFile }} 
-      </div>
       
   </div>
   <ion-row>

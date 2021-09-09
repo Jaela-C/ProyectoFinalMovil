@@ -31,19 +31,16 @@
         <ion-label class="colorText" position="floating">Descripción</ion-label>
         <ion-textarea formControlName="description" type="text" required></ion-textarea>
       </ion-item>
-      
-      <ion-button color="primary" size="medium">
-        <ion-label>Enviar Foto</ion-label>
-        <input type="file" (change)="uploadImage($event.target.files)" />
-      </ion-button>
-      <!-- File upload progress bar -->
-      <div *ngIf="percentageVal | async as percentage">
-        Carga de la imagen: {{ percentage | number }}%
-        <ion-progress-bar value="{{ percentage / 100 }}"></ion-progress-bar>
-      </div>
-    
-      <div *ngIf="trackSnapshot | async as snap">
-        Tamaño del archivo: {{ snap.totalBytes | formatFile }} 
+      <div class="imagecon">
+        <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="image"></ion-icon>Ingrese imagen</ion-label>
+        <button class="imagebutton">
+          <input type="file" (change)="uploadImage($event.target.files)" />
+        </button>
+        <!-- File upload progress bar -->
+        <div *ngIf="percentageVal | async as percentage">
+          Carga de la imagen: {{ percentage | number }}%
+          <ion-progress-bar value="{{ percentage / 100 }}"></ion-progress-bar>
+        </div>
       </div>
   </div>
   <ion-row>
