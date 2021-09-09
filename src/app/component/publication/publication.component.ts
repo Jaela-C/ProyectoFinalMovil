@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, NavController } from '@ionic/angular';
 import { comments } from '../../models/comments';
 import { PublicationsService } from '../../services/publications.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -25,6 +25,7 @@ export class PublicationComponent implements OnInit {
 
   constructor(
     private navparams: NavParams,
+    private navCtrl: NavController,
     private modal: ModalController,
     private PublicationsService: PublicationsService,
     private authService: AuthenticateService,
@@ -32,11 +33,22 @@ export class PublicationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.PublicationsService.getPublication(this.publication.id).subscribe( room => {
-      console.log(room)
-      this.room = room;
-    })
-    this.publication = this.navparams.get('publication')
+    this.authService.userDetails().subscribe(
+      (user) => {
+        if (user !== null) {
+          this.PublicationsService.getPublication(this.publication.id).subscribe( room => {
+            console.log(room)
+            this.room = room;
+          })
+          this.publication = this.navparams.get('publication')
+        } else {
+          this.navCtrl.navigateBack('');
+        }
+      },
+      (err) => {
+        console.log('err', err);
+      }
+    );
   }
 
   closePublication(){
@@ -45,10 +57,8 @@ export class PublicationComponent implements OnInit {
 
   sendComment(){
     this.authService.userDetails().subscribe(user => {
-      if(user != null){
         this.db.collection('users').doc(user.uid).get().subscribe( userInfo => {
           this.infoUser = userInfo.data()
-          if(this.infoUser != undefined){
             const comentario : comments = {
               content : this.msg,
               date: new Date(),
@@ -57,12 +67,7 @@ export class PublicationComponent implements OnInit {
               last_name_user: this.infoUser.last_name,
             }
             this.PublicationsService.sendComment(comentario, this.publication.id)
-          }
         });
-      }
-      else {
-        console.log("sin sesión")
-      }
     })
   }
 }

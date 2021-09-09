@@ -15,7 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { PublicationComponent } from './component/publication/publication.component';
 import { PublicationsadminComponent } from './component/publicationsadmin/publicationsadmin.component';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [AppComponent, PublicationComponent, PublicationsadminComponent],
@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms'
     IonicModule.forRoot(),
     AppRoutingModule,
     CommonModule,
+    ReactiveFormsModule,
     AngularFireAuthModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule
