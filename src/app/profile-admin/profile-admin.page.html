@@ -8,10 +8,12 @@
 
 <ion-content class="ion-padding" color="aliceblue" [fullscreen]="true">
     <div class="containerForm">
-      <ion-avatar class="image">
+      <ion-avatar class="image" *ngIf = "foundation.image === ''">
         <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
       </ion-avatar>
-
+      <ion-avatar class="image" *ngIf = "foundation.image !== ''">
+        <img src={{foundation.image}}>
+      </ion-avatar>
       <ion-item class="login" color="azure">
         <ion-label class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>{{foundation.name}}</ion-label>
       </ion-item>

@@ -5,6 +5,8 @@ import { FoundationService } from '../services/foundation.service';
 import { Observable } from 'rxjs';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { finalize, tap } from 'rxjs/operators';
+import { NavController } from '@ionic/angular';
+import { AuthenticateService } from '../services/authentication.service';
 
 export interface imgFile {
   name: string;
@@ -20,6 +22,7 @@ export class UpdateFoundationPage implements OnInit {
 
   editForm: FormGroup;
   id: any;
+  uid: string;
   imageURL: string
   dataFoundation: FormGroup;
 
@@ -52,6 +55,8 @@ export class UpdateFoundationPage implements OnInit {
     private router: Router,
     private afStorage: AngularFireStorage,
     public formBuilder: FormBuilder,
+    private navCtrl: NavController,
+    private authService: AuthenticateService,
   ) {
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -69,6 +74,19 @@ export class UpdateFoundationPage implements OnInit {
   }
 
   ngOnInit() {
+    this.authService.userDetails().subscribe(
+      (user) => {
+        if (user !== null) {
+          this.uid = user.uid;
+        } else {
+          this.navCtrl.navigateBack('');
+        }
+      },
+      (err) => {
+        console.log('err', err);
+      }
+    );
+
     this.editForm = this.formBuilder.group({
       name: [''],
       last_name: [''],
@@ -93,11 +111,8 @@ export class UpdateFoundationPage implements OnInit {
     this.isFileUploaded = false;
     this.imgName = file.name;
 
-    // // Storage path for user profile
-    // const fileStoragePathProfile = `publications/${this.uid}_${file.name}`;
-
-    // Storage path for publications
-    const fileStoragePath = `publications/${file.name}`;
+    // Storage path for profile
+    const fileStoragePath = `foundations/${this.uid}`;
 
     // Image reference
     const imageRef = this.afStorage.ref(fileStoragePath);

@@ -31,19 +31,11 @@ export class AuthenticateService {
 
   }
 
-  registerFoundation(value) {
+  registerFoundation(value, data) {
     return new Promise<any>((resolve, reject) => {
-      this.afAuth.createUserWithEmailAndPassword(value.email, value.password)
+      this.afAuth.createUserWithEmailAndPassword(data.email, data.password)
       .then( res => {
-        this.db.collection('foundations').doc(res.user.uid).set({
-          name: value.name,
-          last_name: value.last_name,
-          email: value.email,
-          image: "",
-          role: "ADMIN",
-          name_foundation: value.name_foundation,
-          file: ""
-        })
+        this.db.collection('foundations').doc(res.user.uid).set(value)
         resolve(res)
       }).catch(err => reject(err));
     });

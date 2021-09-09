@@ -20,7 +20,7 @@ export class FoundationService {
     last_name: '',
     name_foundation: '',
     email: '',
-    photo: '',
+    image: '',
     rol: '',
   };
 
