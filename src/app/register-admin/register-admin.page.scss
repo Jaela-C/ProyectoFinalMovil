@@ -28,6 +28,7 @@
     margin-top: 5%;;
     margin-bottom: 10%;
     background-color: #5081E5;
+    color: #FFFFFF;
 }
 .image{
     width: 200px;
@@ -44,4 +45,17 @@
 }
 .iconP{
     padding-right: 10px;
+}
+.imagecon{
+    margin-top: 10px;
+    text-align: center;
+    color: #FFFFFF;
+}
+.imagebutton{
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;  
+    margin-top: 10px;
 }

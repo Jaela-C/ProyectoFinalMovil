@@ -33,7 +33,9 @@
       <div class="submit-btn">
       <button class="button" type="submit" [disabled]="!validations_form.valid">INICIAR SESIÓN</button>
       </div>
-      <label class="error-message">{{errorMessage}}</label>
+      <div class="error-message">
+        <label>{{errorMessage}}</label>
+      </div>
     </form>
   <div class="text">
     <p class="go-to-register">

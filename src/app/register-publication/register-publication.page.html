@@ -1,10 +1,7 @@
 <ion-content class="ion-padding" color="aliceblue" [fullscreen]="true">
   <form class="form" [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
     <div class="containerForm">
-      <ion-avatar class="image">
-        <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
-      </ion-avatar>
-
+      <ion-title>INGRESE INFORMACIÓN</ion-title>
       <ion-item class="login" color="azure">
         <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="person-outline"></ion-icon>Título de publicación</ion-label>
         <ion-input type="text" formControlName="title"></ion-input>
@@ -100,7 +97,9 @@
       <div class="submit-btn">
       <button class="submit-btn1" type="submit" [disabled]="!validations_form.valid">REGISTRAR PUBLICACIÓN</button>
       </div>
-      <label class="error-message">{{errorMessage}}</label>
+      <div class="error-message">
+        <label>{{errorMessage}}</label>
+      </div>
     </form>
     <div class="submit-btn">
       <button [routerLink]="['/publications']" class="submit-btn1" shape="full" expand="block" >CANCELAR</button>
