@@ -140,7 +140,7 @@ export class RegisterPublicationPage implements OnInit {
     // eslint-disable-next-line quote-props
     'phone':[
       {type: 'required', message: 'El número de teléfono es requerido'},
-      {type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
+      //{type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
     ],
     // eslint-disable-next-line quote-props
     'description':[
