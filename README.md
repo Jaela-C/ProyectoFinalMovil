@@ -1,6 +1,6 @@
 # Quito Acolita
 El siguiente proyecto muestra el desarrollo de una Aplicación Móvil que permite a fundaciones registrar sus necesidades y a usuarios interactuar con las mismas para brindar ayuda.   
-**Video demostrativo:**   
+**Video demostrativo:** https://youtu.be/R-oGdeoyFQA  
 **Realizado por:**
   - Christian Chalacan
   - Jaela Carlosama
