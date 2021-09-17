@@ -43,3 +43,19 @@ El usuario puede visualizar todas las publicaciones que estén en la Aplicación
 ### Actualizar información de publicaciones   
 La fundación puede modificar la información de una publicación    
 ![Modificar publicaciones](https://raw.githubusercontent.com/Jaela-C/ProyectoFinalMovil/dev/images/updatePublication.jpg)
+
+## INSTALACIÓN
+1. Clonar Repositorio
+```bash
+git clone https://github.com/Jaela-C/ProyectoFinalMovil.git
+```
+2. Instalar dependencias
+```bash
+npm i
+```
+3. Levantar el servidor local
+```bash
+ionic serve
+```
+## ANEXOS
+En [Anexos](https://github.com/Jaela-C/Documentacion_Tesis) se encuentra el Informe Técnico, Manual Técnico y video explicativo.
