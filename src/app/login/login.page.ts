@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { NavController, ToastController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
 
 @Component({
@@ -17,7 +18,9 @@ export class LoginPage implements OnInit {
   constructor(
     private navCtrl: NavController,
     private authService: AuthenticateService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router,
+    public toastController: ToastController,
   ) {
 
   }
@@ -54,7 +57,15 @@ export class LoginPage implements OnInit {
       this.errorMessage='';
       this.navCtrl.navigateForward('/publications');
     }, err => {
-      this.errorMessage = err.message;
+      if(err.code === 'auth/wrong-password'){
+        this.errorMessage = 'La contraseña es incorrecta';
+      }
+      if(err.code === 'auth/invalid-email'){
+        this.errorMessage = 'El correo electrónico es incorrecto';
+      }
+      if(err.code === 'auth/user-not-found'){
+        this.errorMessage = 'Usuario no encontrado o eliminado';
+      }
     }
     );
   }
