@@ -8,6 +8,8 @@ import { Router } from '@angular/router'
 })
 export class AuthenticateService {
 
+  message = '';
+
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
