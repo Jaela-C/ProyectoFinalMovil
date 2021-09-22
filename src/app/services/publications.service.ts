@@ -96,9 +96,4 @@ export class PublicationsService {
     })
   }
 
-  // sendComment(comment, publication_id: string){
-  //   console.log('commnets', comment + 'id' + publication_id);
-  //   return this.ngFirestore.collection('publications').doc(publication_id).collection('comments').add(comment);
-  // }
-
 }
