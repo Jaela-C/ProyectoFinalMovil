@@ -74,6 +74,10 @@ export class PublicationsService {
     return this.ngFirestore.collection('publications').doc(comment_id).valueChanges()
   }
 
+  getComments(comment_id : string){
+    return this.ngFirestore.collection('publications').doc(comment_id).collection('comments').valueChanges()
+  }
+
   getPublicationFoundation(comment_id : string){
     return this.ngFirestore.collection('publications').doc(comment_id).valueChanges()
   }
@@ -89,9 +93,12 @@ export class PublicationsService {
     }
     return this.ngFirestore.collection('publications').doc(publication_id).update({
       comments: firebase.default.firestore.FieldValue.arrayUnion(array),
-    }).then(() => {
-      comment = null
     })
   }
+
+  // sendComment(comment, publication_id: string){
+  //   console.log('commnets', comment + 'id' + publication_id);
+  //   return this.ngFirestore.collection('publications').doc(publication_id).collection('comments').add(comment);
+  // }
 
 }

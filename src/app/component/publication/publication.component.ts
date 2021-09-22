@@ -19,6 +19,7 @@ export class PublicationComponent implements OnInit {
   public msg: string;
   public name_user: string;
   public id_user: string;
+  public userId: string;
   public last_name: string
 
   public room: any;
@@ -36,8 +37,8 @@ export class PublicationComponent implements OnInit {
     this.authService.userDetails().subscribe(
       (user) => {
         if (user !== null) {
-          this.PublicationsService.getPublication(this.publication.id).subscribe( room => {
-            console.log(room)
+          this.userId = user.uid;
+          this.PublicationsService.getPublication(this.publication.id).subscribe(room => {
             this.room = room;
           })
           this.publication = this.navparams.get('publication')
@@ -56,18 +57,18 @@ export class PublicationComponent implements OnInit {
   }
 
   sendComment(){
-    this.authService.userDetails().subscribe(user => {
-        this.db.collection('users').doc(user.uid).get().subscribe( userInfo => {
-          this.infoUser = userInfo.data()
-            const comentario : comments = {
-              content : this.msg,
-              date: new Date(),
-              id_user: user.uid,
-              name_user: this.infoUser.name,
-              last_name_user: this.infoUser.last_name,
-            }
-            this.PublicationsService.sendComment(comentario, this.publication.id)
-        });
-    })
+    this.db.collection('users').doc(this.userId).get().subscribe( userInfo => {
+      this.infoUser = userInfo.data()
+      const comentario: comments = {
+        content: this.msg,
+        date: new Date(),
+        id_user: this.userId,
+        name_user: this.infoUser.name,
+        last_name_user: this.infoUser.last_name,
+      }
+      this.PublicationsService.sendComment(comentario, this.publication.id).then(() => {
+        this.msg = '';
+      })
+    });
   }
 }

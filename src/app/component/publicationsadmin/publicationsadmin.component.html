@@ -47,16 +47,14 @@
   </div>   
 </ion-content>
 <ion-footer>
-  <form [formGroup]="validations_form">
   <div class="containercomment">
-      <div class="write">
-        <ion-textarea formControlName="content" ></ion-textarea>
-      </div>
+    <div class="write">
+      <ion-textarea [(ngModel)]="msg"></ion-textarea>
+    </div>
     <div class="containerbutton">
-      <ion-button (click)="sendCommentFoundation(validations_form.value)" fill=clear class="button">
+      <ion-button (click)="sendComment()" fill=clear class="button">
         <ion-icon name= "send-outline" class="icon"></ion-icon>
       </ion-button>
     </div>
   </div>
-</form>
 </ion-footer>
