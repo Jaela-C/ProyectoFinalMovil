@@ -45,22 +45,32 @@ export class ProfileAdminPage implements OnInit {
       if(user != null){
         this.db.collection('foundations').doc(user.uid).valueChanges().subscribe( foundationData => {
           this.infoFoundation = foundationData;
-          if(this.infoFoundation != undefined){
-            const foundationinfo : FoundationInterface = {
-              uid: user.uid,
-              name: this.infoFoundation.name,
-              last_name: this.infoFoundation.last_name,
-              name_foundation: this.infoFoundation.name_foundation,
-              email: this.infoFoundation.email,
-              image: this.infoFoundation.image,
-              rol: 'Administrador'
+          if(this.infoFoundation !== undefined){
+            if(this.infoFoundation.role === 'ADMIN'){
+              this.statusFoundation = true;
+              const foundationinfo : FoundationInterface = {
+                uid: user.uid,
+                name: this.infoFoundation.name,
+                last_name: this.infoFoundation.last_name,
+                name_foundation: this.infoFoundation.name_foundation,
+                email: this.infoFoundation.email,
+                image: this.infoFoundation.image,
+                rol: 'Administrador'
+              }
+              this.foundation = foundationinfo;
+            } else {
+              this.statusFoundation = false;
+              const foundationinfo : FoundationInterface = {
+                uid: user.uid,
+                name: this.infoFoundation.name,
+                last_name: this.infoFoundation.last_name,
+                name_foundation: this.infoFoundation.name_foundation,
+                email: this.infoFoundation.email,
+                image: this.infoFoundation.image,
+                rol: 'Por aprobar'
+              }
+              this.foundation = foundationinfo;
             }
-            this.foundation = foundationinfo;
-          }
-          if(this.infoFoundation.role === 'ADMIN'){
-            this.statusFoundation = true;
-          } else {
-            this.statusFoundation = false;
           }
         })
       }
