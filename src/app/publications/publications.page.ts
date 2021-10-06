@@ -19,6 +19,7 @@ export class PublicationsPage implements OnInit {
   public infoFoundation: any;
   private router: Router;
   public userProfile: boolean;
+  public statusFoundation: boolean;
     
   constructor(
     public authService: AuthenticateService,
@@ -33,24 +34,32 @@ export class PublicationsPage implements OnInit {
     this.authService.userDetails().subscribe(user => {
       if(user != null){
         this.infoUser = this.db.collection('users').doc(user.uid).get().subscribe( userInfo => {
-          if(userInfo.data() == undefined){
+          if(userInfo.data() === undefined){
               this.publicationService.getPublicationsFoundation(user.uid).subscribe( publications => {
-                this.publicationsList = publications
-              })
+                this.publicationsList = publications;
+              });
               this.userProfile = false;
+              this.db.collection('foundations').doc(user.uid).valueChanges().subscribe( foundationInfo => {
+                this.infoFoundation = foundationInfo;
+                if(this.infoFoundation.role === 'ADMIN'){
+                  this.statusFoundation = true;
+                } else {
+                  this.statusFoundation = false;
+                }
+              });
           }
           else{
             this.publicationService.getPublicationsUser(user.uid).subscribe( publications => {
-              this.publicationsList = publications
-            })
+              this.publicationsList = publications;
+            });
             this.userProfile = true;
           }
-        }); 
+        });
       }
       else {
-        console.log("sin sesión")
+        console.log('sin sesión');
       }
-    })
+    });
   }
 
   openPublication(publication){
@@ -79,7 +88,7 @@ export class PublicationsPage implements OnInit {
   }
 
   delete(id: string){
-    this.publicationService.delete(id)
+    this.publicationService.delete(id);
   }
 
   profileUser(){
@@ -99,69 +108,98 @@ export class PublicationsPage implements OnInit {
   }
 
   async presentActionSheet() {
-    if (this.userProfile == false) {
+    if (this.userProfile === false && this.statusFoundation === true) {
       const actionSheet = await this.actionSheetController.create({
         cssClass: 'my-custom-class',
         buttons: [ {
           text: 'Ver perfil',
           icon: 'person',
           handler: () => {
-            console.log('por', this.userProfile)
-            if(this.userProfile == true){
-              this.profileUser()
+            if(this.userProfile === true){
+              this.profileUser();
             }
-            if(this.userProfile == false){
-              this.profileFoundation()
+            if(this.userProfile === false){
+              this.profileFoundation();
             }
           }
         }, {
           text: 'Agregar publicaciones',
           icon: 'add-circle',
           handler: () => {
-            this.registerPublication()
+            this.registerPublication();
           }
         }, {
           text: 'Ver publicaciones',
           icon: 'eye-outline',
           handler: () => {
-            this.viewPublication()
+            this.viewPublication();
           }
         }, {
           text: 'Cerrar sesión',
           icon: 'log-out',
           handler: () => {
-            this.logoutUser()
+            this.logoutUser();
           }
         },]
       });
       await actionSheet.present();
     }
-    if (this.userProfile == true) {
+    if (this.userProfile === false && this.statusFoundation === false) {
       const actionSheet = await this.actionSheetController.create({
         cssClass: 'my-custom-class',
         buttons: [ {
           text: 'Ver perfil',
           icon: 'person',
           handler: () => {
-            console.log('por', this.userProfile)
-            if(this.userProfile == true){
-              this.profileUser()
+            if(this.userProfile === true){
+              this.profileUser();
             }
-            if(this.userProfile == false){
-              this.profileFoundation()
+            if(this.userProfile === false){
+              this.profileFoundation();
             }
           }
         }, {
           text: 'Ver publicaciones',
           icon: 'eye-outline',
           handler: () => {
-            this.viewPublication()
+            this.viewPublication();
           }
         }, {
           text: 'Cerrar sesión',
           icon: 'log-out',
           handler: () => {
-            this.logoutUser()
+            this.logoutUser();
+          }
+        },]
+      });
+      await actionSheet.present();
+    }
+    if (this.userProfile === true) {
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [ {
+          text: 'Ver perfil',
+          icon: 'person',
+          handler: () => {
+            console.log('por', this.userProfile);
+            if(this.userProfile === true){
+              this.profileUser();
+            }
+            if(this.userProfile === false){
+              this.profileFoundation();
+            }
+          }
+        }, {
+          text: 'Ver publicaciones',
+          icon: 'eye-outline',
+          handler: () => {
+            this.viewPublication();
+          }
+        }, {
+          text: 'Cerrar sesión',
+          icon: 'log-out',
+          handler: () => {
+            this.logoutUser();
           }
         },]
       });

@@ -15,6 +15,7 @@ export class ProfileAdminPage implements OnInit {
   validations_form: FormGroup;
   errorMessage ='';
   infoFoundation: any;
+  statusFoundation: boolean;
 
   foundation: FoundationInterface = {
     uid: '',
@@ -36,7 +37,7 @@ export class ProfileAdminPage implements OnInit {
 
   }
   ngOnInit() {
-    this.profileUser()
+    this.profileUser();
   }
 
   profileUser(){
@@ -56,6 +57,11 @@ export class ProfileAdminPage implements OnInit {
             }
             this.foundation = foundationinfo;
           }
+          if(this.infoFoundation.role === 'ADMIN'){
+            this.statusFoundation = true;
+          } else {
+            this.statusFoundation = false;
+          }
         })
       }
     });
@@ -74,35 +80,62 @@ export class ProfileAdminPage implements OnInit {
   }
 
   async presentActionSheet() {
-    const actionSheet = await this.actionSheetController.create({
-      cssClass: 'my-custom-class',
-      buttons: [ {
-        text: 'Ver perfil',
-        icon: 'person',
-        handler: () => {
-          this.profileUser();
-        }
-      }, {
-        text: 'Agregar publicaciones',
-        icon: 'add-circle',
-        handler: () => {
-          this.registerPublication()
-        }
-      }, {
-        text: 'Ver publicaciones',
-        icon: 'eye-outline',
-        handler: () => {
-          this.viewPublication()
-        }
-      }, {
-        text: 'Cerrar sesión',
-        icon: 'log-out',
-        handler: () => {
-          this.logoutUser()
-        }
-      },]
-    });
-    await actionSheet.present();
+    if(this.statusFoundation === true){
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [ {
+          text: 'Ver perfil',
+          icon: 'person',
+          handler: () => {
+            this.profileUser();
+          }
+        }, {
+          text: 'Agregar publicaciones',
+          icon: 'add-circle',
+          handler: () => {
+            this.registerPublication();
+          }
+        }, {
+          text: 'Ver publicaciones',
+          icon: 'eye-outline',
+          handler: () => {
+            this.viewPublication();
+          }
+        }, {
+          text: 'Cerrar sesión',
+          icon: 'log-out',
+          handler: () => {
+            this.logoutUser();
+          }
+        },]
+      });
+      await actionSheet.present();
+    }
+    if(this.statusFoundation === false){
+      const actionSheet = await this.actionSheetController.create({
+        cssClass: 'my-custom-class',
+        buttons: [ {
+          text: 'Ver perfil',
+          icon: 'person',
+          handler: () => {
+            this.profileUser();
+          }
+        }, {
+          text: 'Ver publicaciones',
+          icon: 'eye-outline',
+          handler: () => {
+            this.viewPublication();
+          }
+        }, {
+          text: 'Cerrar sesión',
+          icon: 'log-out',
+          handler: () => {
+            this.logoutUser();
+          }
+        },]
+      });
+      await actionSheet.present();
+    }
   }
 
   goToUpdateProfile(){
