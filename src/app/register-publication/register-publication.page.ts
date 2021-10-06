@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthenticateService } from '../services/authentication.service';
+import * as moment from 'moment';
 
 export interface imgFile {
   name: string;
@@ -17,7 +18,7 @@ export interface imgFile {
   size: number;
 }
 export interface PublicationInterface{
-  date_ex: string;
+  date_ex: Date;
   description: string;
   // image_user: string;
   last_name: string;
@@ -65,6 +66,7 @@ export class RegisterPublicationPage implements OnInit {
     isFileUploading: boolean;
     isFileUploaded: boolean;
 
+    public nowdate;
   constructor(
     private navCtrl: NavController,
     private publicationService: PublicationsService,
@@ -80,6 +82,8 @@ export class RegisterPublicationPage implements OnInit {
 
   ngOnInit() {
 
+    this.nowdate = moment(Date.now()).format('YYYY-MM-DD');
+
     this.authService.userDetails().subscribe(
       (user) => {
         if (user !== null) {
@@ -94,7 +98,7 @@ export class RegisterPublicationPage implements OnInit {
     );
 
     this.validations_form = this.formBuilder.group({
-      
+
       title:new FormControl('', Validators.compose([
         Validators.required
       ])),
@@ -117,7 +121,7 @@ export class RegisterPublicationPage implements OnInit {
         Validators.required
       ])),
       date_ex: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
       ])),
     });
   }
@@ -140,7 +144,7 @@ export class RegisterPublicationPage implements OnInit {
     // eslint-disable-next-line quote-props
     'phone':[
       {type: 'required', message: 'El número de teléfono es requerido'},
-      //{type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
+      {type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
     ],
     // eslint-disable-next-line quote-props
     'description':[
@@ -157,7 +161,7 @@ export class RegisterPublicationPage implements OnInit {
     console.log('uid', this.uid)
       console.log('registro', value)
       this.FormToSend = this.formBuilder.group({
-        date_ex: value.date_ex,
+        date_ex: moment(value.date_ex).format('YYYY-MM-DD'),
         description: value.description,
         // image_user: string;
         last_name: value.last_name,
@@ -178,7 +182,7 @@ export class RegisterPublicationPage implements OnInit {
           console.log(error);
         });
   }
-  
+
   // Image files
   uploadImage(event: FileList) {
     const file = event.item(0);
@@ -226,7 +230,7 @@ export class RegisterPublicationPage implements OnInit {
       })
     );
   }
-  
+
   storeFilesFirebase(image) {
     this.imageURL = image;
   }

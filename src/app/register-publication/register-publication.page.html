@@ -68,8 +68,8 @@
       </div>
 
       <ion-item class="login" color="azure">
-        <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="mail"></ion-icon>Fecha de vencimiento</ion-label>
-        <ion-textarea type="text" formControlName="date_ex"></ion-textarea>
+        <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="calendar-outline"></ion-icon>Fecha de vencimiento</ion-label>
+        <ion-datetime displayFormat="YYYY-MM-DD" class="colorText" formControlName="date_ex" placeholder="Seleccione una fecha"></ion-datetime>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.date_ex">
