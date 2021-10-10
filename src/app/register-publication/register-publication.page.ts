@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { PublicationsService } from '../services/publications.service';
 import {
   AngularFireStorage,
@@ -74,10 +74,10 @@ export class RegisterPublicationPage implements OnInit {
     private afStorage: AngularFireStorage,
     private authService: AuthenticateService,
     private db: AngularFirestore,
+    public toastController: ToastController
   ) {
     this.isFileUploading = false;
     this.isFileUploaded = false;
-
   }
 
   ngOnInit() {
@@ -156,6 +156,24 @@ export class RegisterPublicationPage implements OnInit {
     ]
   };
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'La publicación se ha registrado correctamente',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentToastCancel() {
+    const toast = await this.toastController.create({
+      message: 'Los cambios no fueron guardados',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
   onSubmit(value) {
     console.log('image', this.imageURL)
     console.log('uid', this.uid)
@@ -176,6 +194,7 @@ export class RegisterPublicationPage implements OnInit {
         .registerPublication(this.FormToSend.value)
         .then(() => {
           this.FormToSend.reset();
+          this.presentToast();
           this.navCtrl.navigateForward('/publications');
         })
         .catch((error) => {

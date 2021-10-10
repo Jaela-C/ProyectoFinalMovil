@@ -1,5 +1,5 @@
 <ion-content class="ion-padding" [fullscreen]="true">
-  <form [formGroup]="validations_form" (ngSubmit)="onSubmit(validations_form.value)">
+  <form [formGroup]="validations_form" (ngSubmit)="presentAlert(validations_form.value)">
   <div class="containerForm">
     <ion-avatar class="image">
       <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
@@ -78,7 +78,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <button [routerLink]="['/profile-admin/']" class="submit-btn" shape="full" expand="block" >CANCELAR</button>
+      <button [routerLink]="['/profile-admin/']" (click)="presentToastCancel()" class="submit-btn" shape="full" expand="block" >CANCELAR</button>
     </ion-col>
   </ion-row>
 </form>

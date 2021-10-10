@@ -46,25 +46,23 @@ export class PublicationsService {
   }
 
   getPublicationsFoundation(id){
-    console.log('userFoundation',id)
-    return this.ngFirestore.collection('publications', ref => ref.where('id_user', "==", id)).snapshotChanges().pipe(map( publications => {
+    return this.ngFirestore.collection('publications', ref => ref.where('id_user', '==', id)).snapshotChanges().pipe(map( publications => {
       console.log('pub', publications)
       return publications.map( doc => {
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
-        data.role_admin = "ADMIN";
+        data.role_admin = 'ADMIN';
         return data;
       })
     }))
   }
 
   getPublicationsUser(id){
-    console.log(id)
     return this.ngFirestore.collection('publications').snapshotChanges().pipe(map( publications => {
       return publications.map( doc => {
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
-        data.role_user = "USER";
+        data.role_user = 'USER';
         return data;
       })
     }))

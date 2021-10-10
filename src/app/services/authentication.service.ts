@@ -60,7 +60,7 @@ export class AuthenticateService {
           .then(() => {
             console.log('Log Out');
             resolve();
-            this.router.navigate(['/login'])
+            this.router.navigate(['/login']);
           }).catch((error) => {
             reject();
           });

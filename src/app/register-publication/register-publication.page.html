@@ -102,7 +102,7 @@
       </div>
     </form>
     <div class="submit-btn">
-      <button [routerLink]="['/publications']" class="submit-btn1" shape="full" expand="block" >CANCELAR</button>
+      <button [routerLink]="['/publications']" (click)="presentToastCancel()" class="submit-btn1" shape="full" expand="block" >CANCELAR</button>
     </div>
 </ion-content>
 

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
-import { FormGroup, FormBuilder, FormControl, Validators } from "@angular/forms";
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Observable } from 'rxjs';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { finalize, tap } from 'rxjs/operators';
-import { NavController } from '@ionic/angular';
+import { NavController, AlertController, ToastController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
 
 
@@ -25,7 +25,7 @@ export class UpdateUserPage implements OnInit {
   dataUser: FormGroup;
   id: any;
   uid: string;
-  imageURL: string
+  imageURL: string;
 
   //Files
   fileUploadTask: AngularFireUploadTask;
@@ -49,7 +49,7 @@ export class UpdateUserPage implements OnInit {
   // File uploading status
   isFileUploading: boolean;
   isFileUploaded: boolean;
-  
+
   constructor(
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
@@ -58,6 +58,8 @@ export class UpdateUserPage implements OnInit {
     public formBuilder: FormBuilder,
     private navCtrl: NavController,
     private authService: AuthenticateService,
+    public alertController: AlertController,
+    public toastController: ToastController
   ) {
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -108,7 +110,7 @@ export class UpdateUserPage implements OnInit {
       email: [''],
       image: [''],
       role: [''],
-    })    
+    })
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -174,7 +176,56 @@ export class UpdateUserPage implements OnInit {
       })
     );
   }
-  
+
+  async presentToastUpdate() {
+    const toast = await this.toastController.create({
+      message: 'La información ha sido actualizada',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentToastCancel() {
+    const toast = await this.toastController.create({
+      message: 'Los cambios no fueron guardados',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentToastMessage() {
+    const toast = await this.toastController.create({
+      message: 'Para actualizar la información es necesario volver a iniciar sesión',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentAlert(value) {
+    const alert = await this.alertController.create({
+      header: 'Actualizar perfil',
+      message: '¿Desea guardar los cambios?',
+      buttons: [{
+        text: 'Sí',
+        handler: () => {
+          this.onSubmit(value);
+          this.presentToastUpdate();
+        }
+      }, {
+        text: 'No',
+        handler: () => {
+          this.router.navigate(['/profile-user']);
+          this.presentToastCancel();
+        }
+      }]
+    });
+
+    await alert.present();
+  }
+
   storeFilesFirebase(image) {
     this.imageURL = image;
   }
@@ -191,7 +242,10 @@ export class UpdateUserPage implements OnInit {
       this.dataUser.reset();
     })
     .catch((error) => {
-      console.log(error)
-    })
+      if(error.code === 'auth/requires-recent-login'){
+        this.presentToastMessage();
+      }
+      console.log(error);
+    });
   }
 }

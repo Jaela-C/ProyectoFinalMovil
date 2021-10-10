@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, ToastController } from '@ionic/angular';
+import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { PublicationsService } from '../services/publications.service';
@@ -20,29 +22,29 @@ export class UpdatePublicationPage implements OnInit {
 
   editForm: FormGroup;
   validations_form: FormGroup;
-  dataPublication: FormGroup
+  dataPublication: FormGroup;
   id: any;
-  imageURL: string
+  imageURL: string;
 
       //Files
       fileUploadTask: AngularFireUploadTask;
 
       // Upload progress
       percentageVal: Observable<number>;
-    
+
       // Track file uploading with snapshot
       trackSnapshot: Observable<any>;
-    
+
       // Uploaded File URL
       UploadedImageURL: Observable<string>;
-    
+
       // Uploaded image collection
       files: Observable<imgFile[]>;
-    
+
       // Image specifications
       imgName: string;
       imgSize: number;
-    
+
       // File uploading status
       isFileUploading: boolean;
       isFileUploaded: boolean;
@@ -53,6 +55,8 @@ export class UpdatePublicationPage implements OnInit {
     private router: Router,
     public formBuilder: FormBuilder,
     private afStorage: AngularFireStorage,
+    public alertController: AlertController,
+    public toastController: ToastController
   ) {
 
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -76,7 +80,7 @@ export class UpdatePublicationPage implements OnInit {
   ngOnInit() {
 
     this.validations_form = this.formBuilder.group({
-      
+
       title:new FormControl('', Validators.compose([
         Validators.required
       ])),
@@ -135,10 +139,49 @@ export class UpdatePublicationPage implements OnInit {
     ]
   };
 
+  async presentToastUpdate() {
+    const toast = await this.toastController.create({
+      message: 'La publicación ha sido actualizada',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentToastCancel() {
+    const toast = await this.toastController.create({
+      message: 'Los cambios no fueron guardados',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentAlert(value) {
+    const alert = await this.alertController.create({
+      header: 'Actualizar publicación',
+      message: '¿Desea guardar los cambios?',
+      buttons: [{
+        text: 'Sí',
+        handler: () => {
+          this.onSubmit(value);
+          this.presentToastUpdate();
+        }
+      }, {
+        text: 'No',
+        handler: () => {
+          this.router.navigate(['/publications']);
+          this.presentToastCancel();
+        }
+      }]
+    });
+
+    await alert.present();
+  }
+
   onSubmit(value) {
-    console.log('datos actu', this.editForm)
     this.dataPublication = this.formBuilder.group({
-      date_ex: value.date_ex,
+      date_ex: moment(value.date_ex).format('YYYY-MM-DD'),
       description: value.description,
       image_user: value.image_user,
       last_name: value.last_name,
@@ -153,8 +196,8 @@ export class UpdatePublicationPage implements OnInit {
       this.dataPublication.reset();
     })
     .catch((error) => {
-      console.log(error)
-    })
+      console.log(error);
+    });
   }
 
   // Image files
@@ -201,7 +244,7 @@ export class UpdatePublicationPage implements OnInit {
       })
     );
   }
-  
+
   storeFilesFirebase(image) {
     this.imageURL = image;
   }

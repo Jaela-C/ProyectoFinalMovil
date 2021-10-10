@@ -50,6 +50,15 @@ export class LoginPage implements OnInit {
     ]
   };
 
+  async presentToastMessage(mess) {
+    const toast = await this.toastController.create({
+      message: mess,
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
   loginUser(value){
     this.authService.loginUser(value)
     .then(res => {
@@ -59,12 +68,15 @@ export class LoginPage implements OnInit {
     }, err => {
       if(err.code === 'auth/wrong-password'){
         this.errorMessage = 'La contraseña es incorrecta';
+        this.presentToastMessage(this.errorMessage);
       }
       if(err.code === 'auth/invalid-email'){
         this.errorMessage = 'El correo electrónico es incorrecto';
+        this.presentToastMessage(this.errorMessage);
       }
       if(err.code === 'auth/user-not-found'){
         this.errorMessage = 'Usuario no encontrado o eliminado';
+        this.presentToastMessage(this.errorMessage);
       }
     }
     );

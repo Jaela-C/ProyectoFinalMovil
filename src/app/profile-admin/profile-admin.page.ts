@@ -71,8 +71,9 @@ export class ProfileAdminPage implements OnInit {
               }
               this.foundation = foundationinfo;
             }
+            console.log("data", this.infoFoundation)
           }
-        })
+        });
       }
     });
   }

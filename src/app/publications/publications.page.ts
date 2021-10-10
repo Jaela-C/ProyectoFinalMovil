@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticateService } from '../services/authentication.service';
 import { PublicationsService } from '../services/publications.service';
-import { ModalController, ActionSheetController } from '@ionic/angular';
+import { ModalController, ActionSheetController, AlertController, ToastController } from '@ionic/angular';
 import { PublicationComponent } from '../component/publication/publication.component';
 import { PublicationsadminComponent } from '../component/publicationsadmin/publicationsadmin.component';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
@@ -14,19 +14,21 @@ import { Router } from '@angular/router';
 })
 export class PublicationsPage implements OnInit {
 
-  public publicationsList :any = [];
+  public publicationsList: any = [];
   public infoUser: any;
   public infoFoundation: any;
   private router: Router;
   public userProfile: boolean;
   public statusFoundation: boolean;
-    
+
   constructor(
     public authService: AuthenticateService,
     private publicationService: PublicationsService,
     private modal: ModalController,
     public actionSheetController: ActionSheetController,
     private db: AngularFirestore,
+    public alertController: AlertController,
+    public toastController: ToastController
   ) {
    }
 
@@ -69,7 +71,7 @@ export class PublicationsPage implements OnInit {
         publication: publication
       }
     }).then( (modal) => modal.present()
-    )
+    );
   }
 
   openPublicationAdmin(publication){
@@ -89,6 +91,45 @@ export class PublicationsPage implements OnInit {
 
   delete(id: string){
     this.publicationService.delete(id);
+    this.presentToastDelete();
+  }
+
+  async presentToastDelete() {
+    const toast = await this.toastController.create({
+      message: 'La publicación ha sido eliminada',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentToastCancel() {
+    const toast = await this.toastController.create({
+      message: 'La publicación no se ha eliminado',
+      duration: 3000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
+  async presentAlert(value) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar publicación',
+      message: '¿Desea elimar la publicación?',
+      buttons: [{
+        text: 'Sí',
+        handler: () => {
+          this.delete(value);
+        }
+      }, {
+        text: 'No',
+        handler: () => {
+          this.presentToastCancel();
+        }
+      }]
+    });
+
+    await alert.present();
   }
 
   profileUser(){

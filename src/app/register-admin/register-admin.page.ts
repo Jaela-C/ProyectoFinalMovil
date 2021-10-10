@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AuthenticateService } from '../services/authentication.service';
 import {
@@ -55,6 +55,7 @@ export class RegisterAdminPage implements OnInit {
     private authService: AuthenticateService,
     private formBuilder: FormBuilder,
     private afStorage: AngularFireStorage,
+    public toastController: ToastController
   ) {
 
   }
@@ -111,24 +112,35 @@ export class RegisterAdminPage implements OnInit {
     ]
   };
 
+  async presentToast(mess) {
+    const toast = await this.toastController.create({
+      message: mess,
+      duration: 5000,
+      position: 'bottom'
+    });
+    toast.present();
+  }
+
   registerFoundation(value){
-    console.log('fundaci', value)
     this.FormToSend = this.formBuilder.group({
       name: value.name,
       last_name: value.last_name,
       email: value.email,
-      image: "",
-      role: "REQUEST",
+      image: '',
+      role: 'REQUEST',
       name_foundation: value.name_foundation,
       file: this.imageURL
     })
     this.authService.registerFoundation(this.FormToSend.value, value)
     .then((res) => {
-      console.log('registro fundación', res);
-      this.errorMessage='';
+      this.errorMessage = 'La fundación se ha registrado correctamente, su perfil será aprobado en un lapso de 24 horas.';
+      this.presentToast(this.errorMessage);
       this.navCtrl.navigateForward('/publications');
     }, err => {
-      this.errorMessage = err.message;
+      if(err.code === 'auth/email-already-in-use'){
+        this.errorMessage = 'La dirección de correo electrónico ya está siendo utilizada por otra cuenta.';
+        this.presentToast(this.errorMessage);
+      }
     }
     );
   }

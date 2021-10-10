@@ -64,7 +64,7 @@
             <ion-button [routerLink]="['/update-publication/', publication.id]" fill=clear class="button">
               <ion-icon name= "create-outline" class="icon2"></ion-icon>
             </ion-button>
-            <ion-button (click)="delete(publication.id)" fill=clear class="button">
+            <ion-button (click)="presentAlert(publication.id)" fill=clear class="button">
               <ion-icon name= "trash-outline" class="icon2"></ion-icon>
             </ion-button>
         </ion-col>
