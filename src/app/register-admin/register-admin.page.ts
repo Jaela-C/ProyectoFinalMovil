@@ -63,15 +63,15 @@ export class RegisterAdminPage implements OnInit {
     this.validations_form = this.formBuilder.group({
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
+        Validators.pattern('^[a-zA-ZñÁÉÍÓÚ]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
+        Validators.pattern('^[a-zA-ZñÁÉÍÓÚ]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       name_foundation:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñÁÉÍÓÚ]+')
+        Validators.pattern('^[a-zA-ZñÁÉÍÓÚ][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñÁÉÍÓÚ]+')
       ])),
       email:new FormControl('', Validators.compose([
         Validators.required,
@@ -79,7 +79,7 @@ export class RegisterAdminPage implements OnInit {
       ])),
       password: new FormControl('', Validators.compose([
         Validators.minLength(8),
-        Validators.pattern('^[a-zA-Z0-9]+[0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+'),
+        Validators.pattern('^[a-zA-Z0-9ñÁÉÍÓÚ]+[0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+'),
         Validators.required
       ])),
     });

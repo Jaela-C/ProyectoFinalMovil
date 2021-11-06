@@ -85,10 +85,10 @@ export class UpdateUserPage implements OnInit {
       this.validations_form = this.formBuilder.group({
         role: data['role'],
         name:new FormControl(data['name'], Validators.compose([
-          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
+          Validators.pattern('^[a-zA-ZñÁÉÍÓÚ]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
         ])),
         last_name:new FormControl(data['last_name'], Validators.compose([
-          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
+          Validators.pattern('^[a-zA-ZñÁÉÍÓÚ]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
         ])),
         email:new FormControl(data['email'], Validators.compose([
           Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
@@ -98,10 +98,10 @@ export class UpdateUserPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       name:new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
+        Validators.pattern('^[a-zA-ZñÁÉÍÓÚ]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
+        Validators.pattern('^[a-zA-ZñÁÉÍÓÚ]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       email:new FormControl('', Validators.compose([
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
