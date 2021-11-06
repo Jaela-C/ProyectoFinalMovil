@@ -69,14 +69,14 @@ export class UpdatePublicationPage implements OnInit {
       this.publicationData = data;
       this.validations_form = this.formBuilder.group({
         title:new FormControl(data['title'], Validators.compose([
-          Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+          Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+')
         ])),
         id_user: data['id_user'],
         name:new FormControl(data['name'], Validators.compose([
-          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
         ])),
         last_name:new FormControl(data['last_name'], Validators.compose([
-          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
         ])),
         phone:new FormControl(data['phone'], Validators.compose([
           Validators.pattern('^[1-9]{1}[0-9]{8}')
@@ -85,7 +85,7 @@ export class UpdatePublicationPage implements OnInit {
         //   Validators.required
         // ])),
         description: new FormControl(data['description'], Validators.compose([
-          Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+          Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+')
         ])),
         date_ex: new FormControl(data['date_ex'], Validators.compose([
 
@@ -95,13 +95,13 @@ export class UpdatePublicationPage implements OnInit {
 
     this.validations_form = this.formBuilder.group({
       title:new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+')
       ])),
       name:new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       phone:new FormControl('', Validators.compose([
         Validators.pattern('^[1-9]{1}[0-9]{8}')
@@ -110,7 +110,7 @@ export class UpdatePublicationPage implements OnInit {
       //   Validators.required
       // ])),
       description: new FormControl('', Validators.compose([
-        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+')
       ])),
       date_ex: new FormControl('', Validators.compose([
       ])),

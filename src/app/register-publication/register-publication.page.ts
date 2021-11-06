@@ -101,15 +101,15 @@ export class RegisterPublicationPage implements OnInit {
 
       title:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+')
       ])),
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñÁÉÍÓÚ]+')
       ])),
       phone:new FormControl('', Validators.compose([
         Validators.required,
@@ -120,7 +120,7 @@ export class RegisterPublicationPage implements OnInit {
       // ])),
       description: new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ0-9ÁÉÍÓÚ]+')
       ])),
       date_ex: new FormControl('', Validators.compose([
         Validators.required,
