@@ -8,30 +8,30 @@ import { Component } from '@angular/core';
 export class HomePage {
 
   arrayInfo: {
-    image: string
+    image: string;
   }[];
   constructor() {
     this.arrayInfo=[
       {
-        "image": "../../assets/Inicio.png"
+        'image': '../../assets/Inicio.png'
       },
       {
-        "image": "../../assets/BrindarAyuda.png"
+        'image': '../../assets/BrindarAyuda.png'
       },
       {
-        "image": "../../assets/ComunicarseFundacion.png"
+        'image': '../../assets/ComunicarseFundacion.png'
       },
       {
-        "image": "../../assets/Publicaciones.png"
+        'image': '../../assets/Publicaciones.png'
       },
       {
-        "image": "../../assets/PerfilesUsuario.png"
+        'image': '../../assets/PerfilesUsuario.png'
       },
       {
-        "image": "../../assets/PerfilUsuario.png"
+        'image': '../../assets/PerfilUsuario.png'
       },
       {
-        "image": "../../assets/PerfilAdministrador.png"
+        'image': '../../assets/PerfilAdministrador.png'
       }
     ]
   }

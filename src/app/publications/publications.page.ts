@@ -82,7 +82,7 @@ export class PublicationsPage implements OnInit {
         publicationsadmin: publication
       }
     }).then( (modal) => modal.present()
-    )
+    );
   }
 
   logoutUser(){

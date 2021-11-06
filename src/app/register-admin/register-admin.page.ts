@@ -63,15 +63,15 @@ export class RegisterAdminPage implements OnInit {
     this.validations_form = this.formBuilder.group({
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       name_foundation:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
       ])),
       email:new FormControl('', Validators.compose([
         Validators.required,
@@ -79,6 +79,7 @@ export class RegisterAdminPage implements OnInit {
       ])),
       password: new FormControl('', Validators.compose([
         Validators.minLength(8),
+        Validators.pattern('^[a-zA-Z0-9]+[0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+'),
         Validators.required
       ])),
     });
@@ -108,7 +109,8 @@ export class RegisterAdminPage implements OnInit {
     // eslint-disable-next-line quote-props
     'password':[
       {type: 'required', message: 'La contraseña es requerida'},
-      {type: 'pattern', message: 'La contraseña debe tener como mínimo 8 caracteres'}
+      {type: 'minLength', message: 'La contraseña debe tener como mínimo 8 caracteres'},
+      {type: 'pattern', message: 'La contraseña sólo puede contener números y letras'}
     ]
   };
 
@@ -130,7 +132,7 @@ export class RegisterAdminPage implements OnInit {
       role: 'REQUEST',
       name_foundation: value.name_foundation,
       file: this.imageURL
-    })
+    });
     this.authService.registerFoundation(this.FormToSend.value, value)
     .then((res) => {
       this.errorMessage = 'La fundación se ha registrado correctamente, su perfil será aprobado en un lapso de 24 horas.';
@@ -151,7 +153,7 @@ export class RegisterAdminPage implements OnInit {
 
     // File validation
     if (file.type.split('/')[0] !== 'application') {
-      console.log(file.type.split('/')[0])
+      console.log(file.type.split('/')[0]);
       console.log('File type is not supported!');
       return;
     }
@@ -164,7 +166,7 @@ export class RegisterAdminPage implements OnInit {
     // const fileStoragePathProfile = `publications/${this.uid}_${file.name}`;
 
     // Storage path for publications
-    const fileStoragePath = `request/${file.name}--${new Date}`;
+    const fileStoragePath = `request/${file.name}--${new Date()}`;
 
     // Image reference
     const imageRef = this.afStorage.ref(fileStoragePath);
@@ -192,10 +194,10 @@ export class RegisterAdminPage implements OnInit {
       })
     );
   }
-  
+
   storeFilesFirebase(image) {
     this.imageURL = image;
-    console.log('imagen', this.imageURL)
+    console.log('imagen', this.imageURL);
   }
 
   goToLoginPage(){

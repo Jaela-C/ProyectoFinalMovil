@@ -26,6 +26,7 @@ export class UpdateUserPage implements OnInit {
   id: any;
   uid: string;
   imageURL: string;
+  userData: any;
 
   //Files
   fileUploadTask: AngularFireUploadTask;
@@ -61,18 +62,6 @@ export class UpdateUserPage implements OnInit {
     public alertController: AlertController,
     public toastController: ToastController
   ) {
-
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.userService.getUser(this.id).subscribe((data) => {
-      this.validations_form = this.formBuilder.group({
-        name: data['name'],
-        last_name: data['last_name'],
-        email: data['email'],
-        image: data['image'],
-        role: data['role'],
-      })
-    });
-
   }
 
   ngOnInit() {
@@ -89,28 +78,35 @@ export class UpdateUserPage implements OnInit {
       }
     );
 
-    this.validations_form = this.formBuilder.group({
-      name:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
-      ])),
-      last_name:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
-      ])),
-      email:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
-      ]))
+
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.userService.getUser(this.id).subscribe((data) => {
+      this.userData = data;
+      this.validations_form = this.formBuilder.group({
+        role: data['role'],
+        name:new FormControl(data['name'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        last_name:new FormControl(data['last_name'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        email:new FormControl(data['email'], Validators.compose([
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
+        ]))
+      });
     });
 
     this.validations_form = this.formBuilder.group({
-      name: [''],
-      last_name: [''],
-      email: [''],
-      image: [''],
-      role: [''],
-    })
+      name:new FormControl('', Validators.compose([
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+      ])),
+      last_name:new FormControl('', Validators.compose([
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+      ])),
+      email:new FormControl('', Validators.compose([
+        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
+      ]))
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
@@ -231,12 +227,22 @@ export class UpdateUserPage implements OnInit {
   }
 
   onSubmit(value) {
-    this.dataUser = this.formBuilder.group({
-      last_name: value.last_name,
-      name: value.name,
-      email: value.email,
-      image: this.imageURL,
-    })
+    if(this.imageURL === undefined){
+      this.dataUser = this.formBuilder.group({
+        last_name: value.last_name,
+        name: value.name,
+        email: value.email,
+        image: this.userData.image,
+      });
+    }
+    if(this.imageURL !== undefined){
+      this.dataUser = this.formBuilder.group({
+        last_name: value.last_name,
+        name: value.name,
+        email: value.email,
+        image: this.imageURL,
+      });
+    }
     this.userService.update(this.id, this.dataUser.value)
     .then(() => {
       this.dataUser.reset();

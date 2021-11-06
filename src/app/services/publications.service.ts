@@ -22,7 +22,7 @@ export class PublicationsService {
   ) {}
 
   registerPublication(value) {
-    console.log('registro de publicación', value)
+    console.log('registro de publicación', value);
     return this.ngFirestore.collection('publications').add(value);
   }
 
@@ -47,25 +47,23 @@ export class PublicationsService {
 
   getPublicationsFoundation(id){
     return this.ngFirestore.collection('publications', ref => ref.where('id_user', '==', id)).snapshotChanges().pipe(map( publications => {
-      console.log('pub', publications)
+      console.log('pub', publications);
       return publications.map( doc => {
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
         data.role_admin = 'ADMIN';
         return data;
-      })
-    }))
+      });
+    }));
   }
 
   getPublicationsUser(id){
-    return this.ngFirestore.collection('publications').snapshotChanges().pipe(map( publications => {
-      return publications.map( doc => {
+    return this.ngFirestore.collection('publications').snapshotChanges().pipe(map( publications => publications.map( doc => {
         const data = doc.payload.doc.data() as PublicationInterface;
         data.id = doc.payload.doc.id;
         data.role_user = 'USER';
         return data;
-      })
-    }))
+      })));
   }
 
   getPublication(comment_id : string){

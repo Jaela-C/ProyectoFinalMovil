@@ -10,7 +10,7 @@ import { FoundationInterface } from '../models/foundation';
 export class FoundationService {
 
   constructor(
-    private ngFirestore: AngularFirestore, 
+    private ngFirestore: AngularFirestore,
     private router: Router,
   ) {}
 

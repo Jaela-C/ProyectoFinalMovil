@@ -4,7 +4,7 @@
     <ion-title>EDITAR PUBLICACIÓN</ion-title>
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Título</ion-label>
-        <ion-input formControlName="title" type="text" required></ion-input>
+        <ion-input formControlName="title" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.title">
@@ -17,7 +17,7 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Nombre del responsable</ion-label>
-        <ion-input formControlName="name" type="text" required></ion-input>
+        <ion-input formControlName="name" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.name">
@@ -30,7 +30,7 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Apellido del responsable</ion-label>
-        <ion-input formControlName="last_name" type="text" required></ion-input>
+        <ion-input formControlName="last_name" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.last_name">
@@ -43,7 +43,7 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Contacto</ion-label>
-        <ion-input formControlName="phone" type="text" required></ion-input>
+        <ion-input formControlName="phone" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.phone">
@@ -69,7 +69,7 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Descripción</ion-label>
-        <ion-textarea formControlName="description" type="text" required></ion-textarea>
+        <ion-textarea formControlName="description" type="text"></ion-textarea>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.description">

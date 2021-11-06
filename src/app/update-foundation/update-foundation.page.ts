@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,10 +23,11 @@ export interface imgFile {
 export class UpdateFoundationPage implements OnInit {
 
   validations_form: FormGroup;
+  dataFoundation: any;
   id: any;
   uid: string;
-  imageURL: string
-  dataFoundation: FormGroup;
+  imageURL: string;
+  FormToSend: FormGroup;
   errorMessage ='';
 
   //Files
@@ -50,6 +53,8 @@ export class UpdateFoundationPage implements OnInit {
   isFileUploading: boolean;
   isFileUploaded: boolean;
 
+  name: string;
+
   constructor(
     private foundationService: FoundationService,
     private activatedRoute: ActivatedRoute,
@@ -61,43 +66,41 @@ export class UpdateFoundationPage implements OnInit {
     public alertController: AlertController,
     public toastController: ToastController
   ) {
-
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.foundationService.getUser(this.id).subscribe((data) => {
-      this.validations_form = this.formBuilder.group({
-        name: data['name'],
-        last_name: data['last_name'],
-        email: data['email'],
-        image: data['image'],
-        role: data['role'],
-        name_foundation: data['name_foundation'],
-      })
-    });
-
   }
 
   ngOnInit() {
 
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.foundationService.getUser(this.id).subscribe((data) => {
+      this.dataFoundation = data;
+      this.validations_form = this.formBuilder.group({
+        name:new FormControl(data['name'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        last_name:new FormControl(data['last_name'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        name_foundation:new FormControl(data['name_foundation'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        email:new FormControl(data['email'], Validators.compose([
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
+        ])),
+      });
+    });
+
     this.validations_form = this.formBuilder.group({
       name:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       name_foundation:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       email:new FormControl('', Validators.compose([
-        Validators.required,
         Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9_.+-]+.[a-zA-Z]+$')
-      ])),
-      password: new FormControl('', Validators.compose([
-        Validators.minLength(8),
-        Validators.required
       ])),
     });
 
@@ -113,37 +116,24 @@ export class UpdateFoundationPage implements OnInit {
         console.log('err', err);
       }
     );
-
-    this.validations_form = this.formBuilder.group({
-      name: [''],
-      last_name: [''],
-      email: [''],
-      image: [''],
-      role: [''],
-      name_foundation: [''],
-    });
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  validation_messages={
+  validationMessages={
     // eslint-disable-next-line quote-props
     'name':[
-      {type: 'required', message: 'El nombre es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
     ],
     // eslint-disable-next-line quote-props
     'last_name':[
-      {type: 'required', message: 'El apellido es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un apellido válido'}
     ],
     // eslint-disable-next-line quote-props
     'name_foundation':[
-      {type: 'required', message: 'El nombre de la fundación es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
     ],
     // eslint-disable-next-line quote-props
     'email':[
-      {type: 'required', message: 'El email es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un correo válido'}
     ],
   };
@@ -238,7 +228,6 @@ export class UpdateFoundationPage implements OnInit {
         }
       }]
     });
-
     await alert.present();
   }
 
@@ -247,15 +236,27 @@ export class UpdateFoundationPage implements OnInit {
   }
 
   onSubmit(value) {
-    this.dataFoundation = this.formBuilder.group({
-      last_name: value.last_name,
-      name: value.name,
-      email: value.email,
-      image: this.imageURL,
-    })
-    this.foundationService.update(this.id, this.dataFoundation.value)
+    if(this.imageURL === undefined){
+      this.FormToSend = this.formBuilder.group({
+        last_name: value.last_name,
+        name: value.name,
+        email: value.email,
+        name_foundation: value.name_foundation,
+        image: this.dataFoundation.image
+      });
+    }
+    if(this.imageURL !== undefined){
+      this.FormToSend = this.formBuilder.group({
+        last_name: value.last_name,
+        name: value.name,
+        email: value.email,
+        name_foundation: value.name_foundation,
+        image: this.imageURL
+      });
+    }
+    this.foundationService.update(this.id, this.FormToSend.value)
     .then(() => {
-      this.dataFoundation.reset();
+      this.FormToSend.reset();
       this.presentToastUpdate();
     })
     .catch((error) => {
@@ -265,5 +266,4 @@ export class UpdateFoundationPage implements OnInit {
       console.log(error);
     });
   }
-
 }

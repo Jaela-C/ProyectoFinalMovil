@@ -25,11 +25,11 @@ export class RegisterPage implements OnInit {
     this.validations_form = this.formBuilder.group({
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       email:new FormControl('', Validators.compose([
         Validators.required,
@@ -37,6 +37,7 @@ export class RegisterPage implements OnInit {
       ])),
       password: new FormControl('', Validators.compose([
         Validators.minLength(8),
+        Validators.pattern('^[a-zA-Z0-9]+[0-9A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+'),
         Validators.required
       ])),
     });
@@ -61,7 +62,8 @@ export class RegisterPage implements OnInit {
     // eslint-disable-next-line quote-props
     'password':[
       {type: 'required', message: 'La contraseña es requerida'},
-      {type: 'pattern', message: 'La contraseña debe tener como mínimo 8 caracteres'}
+      {type: 'minLength', message: 'La contraseña debe tener como mínimo 8 caracteres'},
+      {type: 'pattern', message: 'La contraseña sólo puede contener números y letras'}
     ]
   };
 

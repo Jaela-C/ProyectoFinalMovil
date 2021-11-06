@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -25,6 +26,7 @@ export class UpdatePublicationPage implements OnInit {
   dataPublication: FormGroup;
   id: any;
   imageURL: string;
+  publicationData: any;
 
       //Files
       fileUploadTask: AngularFireUploadTask;
@@ -58,52 +60,59 @@ export class UpdatePublicationPage implements OnInit {
     public alertController: AlertController,
     public toastController: ToastController
   ) {
-
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.publicationService.getPublicationID(this.id).subscribe((data) => {
-      console.log('datos publiact', data)
-      this.validations_form = this.formBuilder.group({
-        date_ex: data['date_ex'],
-        description: data['description'],
-        image_user: data['image_user'],
-        last_name: data['last_name'],
-        name: data['name'],
-        phone: data['phone'],
-        title: data['title'],
-        id_user: data['id_user'], 
-        image: data['image'],
-      })
-    });
-
   }
 
   ngOnInit() {
 
-    this.validations_form = this.formBuilder.group({
+    this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.publicationService.getPublicationID(this.id).subscribe((data) => {
+      this.publicationData = data;
+      this.validations_form = this.formBuilder.group({
+        title:new FormControl(data['title'], Validators.compose([
+          Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        id_user: data['id_user'],
+        name:new FormControl(data['name'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        last_name:new FormControl(data['last_name'], Validators.compose([
+          Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        phone:new FormControl(data['phone'], Validators.compose([
+          Validators.pattern('^[1-9]{1}[0-9]{8}')
+        ])),
+        // image: new FormControl('', Validators.compose([
+        //   Validators.required
+        // ])),
+        description: new FormControl(data['description'], Validators.compose([
+          Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
+        ])),
+        date_ex: new FormControl(data['date_ex'], Validators.compose([
 
+        ])),
+      })
+    });
+
+    this.validations_form = this.formBuilder.group({
       title:new FormControl('', Validators.compose([
-        Validators.required
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       name:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
-        Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       phone:new FormControl('', Validators.compose([
-        Validators.required,
         Validators.pattern('^[1-9]{1}[0-9]{8}')
       ])),
       // image: new FormControl('', Validators.compose([
       //   Validators.required
       // ])),
       description: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       date_ex: new FormControl('', Validators.compose([
-        Validators.required
       ])),
     });
   }
@@ -112,30 +121,27 @@ export class UpdatePublicationPage implements OnInit {
   validation_messages={
     // eslint-disable-next-line quote-props
     'title':[
-      {type: 'required', message: 'El título es requerido'},
+      {type: 'pattern', message: 'El título sólo puede contener letras'}
     ],
     // eslint-disable-next-line quote-props
     'name':[
-      {type: 'required', message: 'El nombre es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un nombre válido'}
     ],
     // eslint-disable-next-line quote-props
     'last_name':[
-      {type: 'required', message: 'El apellido es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un apellido válido'}
     ],
     // eslint-disable-next-line quote-props
     'phone':[
-      {type: 'required', message: 'El número de teléfono es requerido'},
       {type: 'pattern', message: 'Por favor ingrese un número de teléfono válido, el número no debe incluir cero'}
     ],
     // eslint-disable-next-line quote-props
     'description':[
-      {type: 'required', message: 'La descripción es requerida'},
+      {type: 'pattern', message: 'La descripción sólo puede contener letras'}
     ],
     // eslint-disable-next-line quote-props
     'date_ex':[
-      {type: 'required', message: 'La fecha es requerida'},
+      {type: 'pattern', message: 'El título sólo puede contener letras'}
     ]
   };
 
@@ -180,17 +186,60 @@ export class UpdatePublicationPage implements OnInit {
   }
 
   onSubmit(value) {
-    this.dataPublication = this.formBuilder.group({
-      date_ex: moment(value.date_ex).format('YYYY-MM-DD'),
-      description: value.description,
-      image_user: value.image_user,
-      last_name: value.last_name,
-      name: value.name,
-      phone: value.phone,
-      title: value.title,
-      id_user: value.id_user,
-      image: this.imageURL,
-    })
+    if(this.imageURL === undefined && value.date_ex === 'Invalid date'){
+      console.log('fecha', value.date_ex);
+      this.dataPublication = this.formBuilder.group({
+        date_ex: this.publicationData.date_ex,
+        description: value.description,
+        image_user: value.image_user,
+        last_name: value.last_name,
+        name: value.name,
+        phone: value.phone,
+        title: value.title,
+        id_user: value.id_user,
+        image: this.publicationData.image,
+      });
+    }
+    if(this.imageURL === undefined && value.date_ex !== 'Invalid date'){
+      console.log('fecha', value.date_ex);
+      this.dataPublication = this.formBuilder.group({
+        date_ex: moment(value.date_ex).format('YYYY-MM-DD'),
+        description: value.description,
+        image_user: value.image_user,
+        last_name: value.last_name,
+        name: value.name,
+        phone: value.phone,
+        title: value.title,
+        id_user: value.id_user,
+        image: this.publicationData.image,
+      });
+    }
+    if(this.imageURL !== undefined && value.date_ex !== 'Invalid date'){
+      this.dataPublication = this.formBuilder.group({
+        date_ex: moment(value.date_ex).format('YYYY-MM-DD'),
+        description: value.description,
+        image_user: value.image_user,
+        last_name: value.last_name,
+        name: value.name,
+        phone: value.phone,
+        title: value.title,
+        id_user: value.id_user,
+        image: this.imageURL,
+      });
+    }
+    if(this.imageURL !== undefined && value.date_ex === 'Invalid date'){
+      this.dataPublication = this.formBuilder.group({
+        date_ex: this.publicationData.date_ex,
+        description: value.description,
+        image_user: value.image_user,
+        last_name: value.last_name,
+        name: value.name,
+        phone: value.phone,
+        title: value.title,
+        id_user: value.id_user,
+        image: this.imageURL,
+      });
+    }
     this.publicationService.update(this.id, this.dataPublication.value)
     .then(() => {
       this.dataPublication.reset();
@@ -215,7 +264,7 @@ export class UpdatePublicationPage implements OnInit {
     this.imgName = file.name;
 
     // Storage path for publications
-    const fileStoragePath = `publications/${file.name}--${new Date}`;
+    const fileStoragePath = `publications/${file.name}--${new Date()}`;
 
     // Image reference
     const imageRef = this.afStorage.ref(fileStoragePath);
@@ -248,5 +297,4 @@ export class UpdatePublicationPage implements OnInit {
   storeFilesFirebase(image) {
     this.imageURL = image;
   }
-
 }

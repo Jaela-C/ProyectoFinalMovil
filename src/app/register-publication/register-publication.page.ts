@@ -48,20 +48,20 @@ export class RegisterPublicationPage implements OnInit {
 
     // Upload progress
     percentageVal: Observable<number>;
-  
+
     // Track file uploading with snapshot
     trackSnapshot: Observable<any>;
-  
+
     // Uploaded File URL
     UploadedImageURL: Observable<string>;
-  
+
     // Uploaded image collection
     files: Observable<imgFile[]>;
-  
+
     // Image specifications
     imgName: string;
     imgSize: number;
-  
+
     // File uploading status
     isFileUploading: boolean;
     isFileUploaded: boolean;
@@ -100,15 +100,16 @@ export class RegisterPublicationPage implements OnInit {
     this.validations_form = this.formBuilder.group({
 
       title:new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       last_name:new FormControl('', Validators.compose([
         Validators.required,
-        Validators.pattern('[ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.-ñ]+')
+        Validators.pattern('^[a-zA-Z]+[A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       phone:new FormControl('', Validators.compose([
         Validators.required,
@@ -118,7 +119,8 @@ export class RegisterPublicationPage implements OnInit {
       //   Validators.required
       // ])),
       description: new FormControl('', Validators.compose([
-        Validators.required
+        Validators.required,
+        Validators.pattern('^[a-zA-Z][ A-Za-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ-ñ]+')
       ])),
       date_ex: new FormControl('', Validators.compose([
         Validators.required,
@@ -130,6 +132,7 @@ export class RegisterPublicationPage implements OnInit {
     // eslint-disable-next-line quote-props
     'title':[
       {type: 'required', message: 'El título es requerido'},
+      {type: 'pattern', message: 'El título sólo puede contener letras'}
     ],
     // eslint-disable-next-line quote-props
     'name':[
@@ -149,6 +152,7 @@ export class RegisterPublicationPage implements OnInit {
     // eslint-disable-next-line quote-props
     'description':[
       {type: 'required', message: 'La descripción es requerida'},
+      {type: 'pattern', message: 'La descripción sólo puede contener letras'}
     ],
     // eslint-disable-next-line quote-props
     'date_ex':[

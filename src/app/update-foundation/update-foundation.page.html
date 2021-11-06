@@ -1,8 +1,8 @@
 <ion-content class="ion-padding" [fullscreen]="true">
-  <form [formGroup]="validations_form" (ngSubmit)="presentAlert(validations_form.value)">
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="presentAlert(validations_form.value)">
   <div class="containerForm">
     <ion-avatar class="image">
-      <img src="https://filminvalle.com/wp-content/uploads/2019/10/User-Icon.png">
+      <img src="../../assets/user.png">
     </ion-avatar>
     <div class="imagecon">
       <ion-label>Cambiar foto</ion-label>
@@ -20,10 +20,10 @@
     </div>
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Nombre</ion-label>
-        <ion-input formControlName="name" type="text" required></ion-input>
+        <ion-input value="333" formControlName="name" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.name">
+        <ng-container *ngFor="let validation of validationMessages.name">
           <div class="error-message"
             *ngIf="validations_form.get('name').hasError(validation.type) && (validations_form.get('name').dirty || validations_form.get('name').touched)">
             {{ validation.message }}
@@ -33,10 +33,10 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Apellido</ion-label>
-        <ion-input formControlName="last_name" type="text" required></ion-input>
+        <ion-input formControlName="last_name" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.last_name">
+        <ng-container *ngFor="let validation of validationMessages.last_name">
           <div class="error-message"
             *ngIf="validations_form.get('last_name').hasError(validation.type) && (validations_form.get('last_name').dirty || validations_form.get('last_name').touched)">
             {{ validation.message }}
@@ -46,10 +46,10 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Correo electrónico</ion-label>
-        <ion-input formControlName="email" type="text" required></ion-input>
+        <ion-input formControlName="email" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.email">
+        <ng-container *ngFor="let validation of validationMessages.email">
           <div class="error-message"
             *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
             {{ validation.message }}
@@ -59,10 +59,10 @@
 
       <ion-item class="login" color="azure">
         <ion-label class="colorText" position="floating">Nombre de la fundación</ion-label>
-        <ion-input formControlName="name_foundation" type="text" required></ion-input>
+        <ion-input formControlName="name_foundation" type="text"></ion-input>
       </ion-item>
       <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.name_foundation">
+        <ng-container *ngFor="let validation of validationMessages.name_foundation">
           <div class="error-message"
             *ngIf="validations_form.get('name_foundation').hasError(validation.type) && (validations_form.get('name_foundation').dirty || validations_form.get('name_foundation').touched)">
             {{ validation.message }}
@@ -73,7 +73,7 @@
   </div>
   <ion-row>
     <ion-col>
-      <button type="submit" class="submit-btn" shape="full" expand="block" >ACTUALIZAR PERFIL</button>
+      <button [disabled]="!validations_form.valid" type="submit" class="submit-btn" shape="full" expand="block" >ACTUALIZAR PERFIL</button>
     </ion-col>
   </ion-row>
   <ion-row>
