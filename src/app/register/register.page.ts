@@ -13,6 +13,8 @@ export class RegisterPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage ='';
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
 
   constructor(
     private navCtrl: NavController,
@@ -81,6 +83,11 @@ export class RegisterPage implements OnInit {
 
   goToLoginPage(){
     this.navCtrl.navigateForward('/login');
+  }
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
 }

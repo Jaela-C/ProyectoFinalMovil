@@ -14,6 +14,8 @@ export class LoginPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage ='';
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
 
   constructor(
     private navCtrl: NavController,
@@ -57,6 +59,11 @@ export class LoginPage implements OnInit {
       position: 'bottom'
     });
     toast.present();
+  }
+
+  hideShowPassword() {
+      this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+      this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
   loginUser(value){

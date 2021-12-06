@@ -46,7 +46,8 @@
 
       <ion-item class="login" color="azure">
         <ion-label position="floating" class="colorText"><ion-icon class="iconP" name="lock-closed-outline"></ion-icon>Contraseña</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
+        <ion-input [type]="passwordType" formControlName="password" clearOnEdit="false"></ion-input>
+        <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)='hideShowPassword()'></ion-icon>
       </ion-item>
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.password">

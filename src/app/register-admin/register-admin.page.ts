@@ -26,6 +26,8 @@ export class RegisterAdminPage implements OnInit {
   errorMessage ='';
   imageURL: string;
   FormToSend: FormGroup;
+  passwordType = 'password';
+  passwordIcon = 'eye-off';
 
   //Files
   fileUploadTask: AngularFireUploadTask;
@@ -202,6 +204,11 @@ export class RegisterAdminPage implements OnInit {
 
   goToLoginPage(){
     this.navCtrl.navigateForward('/login');
+  }
+
+  hideShowPassword() {
+    this.passwordType = this.passwordType === 'text' ? 'password' : 'text';
+    this.passwordIcon = this.passwordIcon === 'eye-off' ? 'eye' : 'eye-off';
   }
 
 }
