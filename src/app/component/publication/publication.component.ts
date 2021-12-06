@@ -20,7 +20,7 @@ export class PublicationComponent implements OnInit {
   public name_user: string;
   public id_user: string;
   public userId: string;
-  public last_name: string
+  public last_name: string;
 
   public room: any;
 
