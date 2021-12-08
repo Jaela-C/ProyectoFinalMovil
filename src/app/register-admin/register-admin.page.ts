@@ -137,7 +137,7 @@ export class RegisterAdminPage implements OnInit {
     });
     this.authService.registerFoundation(this.FormToSend.value, value)
     .then((res) => {
-      this.errorMessage = 'La fundación se ha registrado correctamente, su perfil será aprobado en un lapso de 24 horas.';
+      this.errorMessage = 'La fundación se ha registrado correctamente, recibirá un correo de confirmación.';
       this.presentToast(this.errorMessage);
       this.navCtrl.navigateForward('/publications');
     }, err => {
